@@ -170,6 +170,7 @@ void loop() {
     // stop the waveform generation before the next note.
     noTone(buzzer);
     firstHit = 0;
+    //ur mom
   }
      
   }
