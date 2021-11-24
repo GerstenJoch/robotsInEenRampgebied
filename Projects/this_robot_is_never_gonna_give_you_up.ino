@@ -162,13 +162,13 @@ void loop() {
     // we only play the note for 90% of the duration, leaving 10% as a pause
     tone(buzzer, melody[thisNote], noteDuration * 0.9);
     digitalWrite(ledPin, HIGH);
-
+    delay(20);
+    digitalWrite(ledPin, LOW);
     // Wait for the specief duration before playing the next note.
-    delay(noteDuration);
+    delay(noteDuration-20);
     
     // stop the waveform generation before the next note.
     noTone(buzzer);
-    digitalWrite(ledPin, LOW);
     firstHit = 0;
   }
      
