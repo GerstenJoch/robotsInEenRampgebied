@@ -170,6 +170,7 @@ void loop() {
     // stop the waveform generation before the next note.j,sd KLVnzdoKJ FHzoKJD nsJKLDN aSKHvawjklD HsjkZD HawklJD HawUIDHK a
     noTone(buzzer);
     firstHit = 0;
+    //ur mom
   }
      
   }
