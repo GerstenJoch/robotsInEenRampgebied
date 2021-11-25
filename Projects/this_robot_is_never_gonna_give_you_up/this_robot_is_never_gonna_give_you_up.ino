@@ -167,7 +167,7 @@ void loop() {
     // Wait for the specief duration before playing the next note.
     delay(noteDuration-20);
     
-    // stop the waveform generation before the next note.
+    // stop the waveform generation before the next note.j,sd KLVnzdoKJ FHzoKJD nsJKLDN aSKHvawjklD HsjkZD HawklJD HawUIDHK a
     noTone(buzzer);
     firstHit = 0;
   }
