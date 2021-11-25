@@ -169,7 +169,6 @@ void loop() {
     
     noTone(buzzer);
     firstHit = 0;
-    //ur mom
   }
      
   }
