@@ -27,6 +27,7 @@ void setup() {
   Serial.begin(9600);
   pinMode(pressureIsTrueLed, OUTPUT);   //Set LED to output
   isButtonPressed = 0;    //Set button status to "0", aka false; the button has not been pressed before, or has been set to status "0"
+  //fahdiawdhwiauwauidhawiudhwiauhdwiuuaiuuhaiuhdwadwiu,fgsguie
 }
 
 void loop() {
