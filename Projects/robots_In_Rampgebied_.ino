@@ -42,6 +42,7 @@ void loop() {
     isButtonPressed = 0;      //Set button status to "0", aka false, the button has been pressen before, but is not set to false so the button can be pressed again
     Serial.print(">>> OFF");  //Print ">>> OFF " in serial, for status updates
     digitalWrite(pressureIsTrueLed, LOW);   //Turn off LED
+    //dit is een test
 
   }
 }
