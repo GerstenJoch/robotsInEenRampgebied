@@ -1,3 +1,4 @@
+#include "Arduino.h"
 /* 
   Never Gonna Give you Up
   Connect a piezo buzzer or speaker to pin 11 or select a new pin.
