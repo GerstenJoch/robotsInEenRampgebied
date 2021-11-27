@@ -1,8 +1,4 @@
 /*
- * created by Rui Santos, https://randomnerdtutorials.com
- * 
- * Complete Guide for Ultrasonic Sensor HC-SR04
- *
     Ultrasonic sensor Pins:
         VCC: +5VDC
         Trig : Trigger (INPUT) - Pin11

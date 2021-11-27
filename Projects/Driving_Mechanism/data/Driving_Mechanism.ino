@@ -11,7 +11,6 @@ int trigPin = 6;    // Trigger
 int echoPin = 7;    // Echo
 long duration, cm;
 int speed1;
-
 void setup() {
   Serial.begin (9600);
   pinMode(trigPin, OUTPUT);
@@ -20,6 +19,8 @@ void setup() {
   pinMode(LF_Motor, OUTPUT);
   pinMode(RB_Motor, OUTPUT);
   pinMode(LB_Motor, OUTPUT);
+
+
 }
 
 void loop() {
