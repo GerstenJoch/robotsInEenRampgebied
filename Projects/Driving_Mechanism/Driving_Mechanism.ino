@@ -11,28 +11,42 @@ int trigPin = 6;    // Trigger
 int echoPin = 7;    // Echo
 long duration, cm;
 int speed1;
+int ledPin = 11;
 void setup() {
-  Serial.begin (9600);
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
   pinMode(RF_Motor, OUTPUT);
   pinMode(LF_Motor, OUTPUT);
   pinMode(RB_Motor, OUTPUT);
   pinMode(LB_Motor, OUTPUT);
+  pinMode(ledPin, OUTPUT);
 
 }
 
 void loop() {
   distanceSensor();
-  if(cm > 10){
+  digitalWrite(ledPin,LOW);
+  if(cm > 20){
   distanceSensor();
-  fwd(255);
-  }if (!(cm > 10)){
+  fwd(150);
+  delay(500);
+  digitalWrite(ledPin, HIGH);
+  }
+  if (cm <= 20){
   stop();
+  digitalWrite(ledPin, HIGH);
+  distanceSensor();
+  }
+  /*delay(300);
+  rotateRight(140);
+  delay(400);
+  distanceSensor();
+  }/*
   distanceSensor();
   delay(300);
   rotateRight(140);
   delay(400);
+  distanceSensor();*/
 }
 
 void rotateRight(int speed){
@@ -93,10 +107,6 @@ void distanceSensor(){
  
   // Convert the time into a distance
   cm = (duration/2) / 29.1;     // Divide by 29.1 or multiply by 0.0343
-
-  Serial.print(cm);
-  Serial.print("cm");
-  Serial.println();
   
   delay(250);
 }
