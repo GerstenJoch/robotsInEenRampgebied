@@ -11,7 +11,6 @@ int trigPin = 6;    // Trigger
 int echoPin = 7;    // Echo
 long duration, cm;
 int speed1;
-
 void setup() {
   Serial.begin (9600);
   pinMode(trigPin, OUTPUT);
@@ -20,36 +19,35 @@ void setup() {
   pinMode(LF_Motor, OUTPUT);
   pinMode(RB_Motor, OUTPUT);
   pinMode(LB_Motor, OUTPUT);
+
 }
 
 void loop() {
-  while(cm > 40){
   distanceSensor();
-  fwd(130);
-  }
+  if(cm > 10){
   distanceSensor();
+  fwd(255);
+  }if (!(cm > 10)){
   stop();
-}
-void rotateRight(int max, double amplifier){
-    while(speedAcc < max){
-      speedAcc = speedAcc * amplifier;
-      analogWrite(LF_Motor, speedAcc);
-      analogWrite(RB_Motor, speedAcc);
-      analogWrite(RF_Motor, 0);
-      analogWrite(LB_Motor, 0);
-      delay(1000);
-  }
+  distanceSensor();
+  delay(300);
+  rotateRight(140);
+  delay(400);
 }
 
-void rotateLeft(int max, double amplifier){
-  while(speedAcc < max){
-  speedAcc = speedAcc * amplifier;
-  analogWrite(LB_Motor, speedAcc);
-  analogWrite(RF_Motor, speedAcc);
-  analogWrite(LF_Motor, 0);
-  analogWrite(RB_Motor, 0);
-  delay(100);
-  }
+void rotateRight(int speed){
+      analogWrite(LF_Motor, speed);
+      analogWrite(RB_Motor, speed);
+      analogWrite(RF_Motor, 0);
+      analogWrite(LB_Motor, 0);
+  
+}
+
+void rotateLeft(int speed){
+      analogWrite(LF_Motor, speed);
+      analogWrite(RB_Motor, speed);
+      analogWrite(RF_Motor, 0);
+      analogWrite(LB_Motor, 0);
 }
 void stop() {
   analogWrite(LB_Motor, 0);
@@ -57,10 +55,18 @@ void stop() {
   analogWrite(LF_Motor, 0);
   analogWrite(RF_Motor, 0);
 }
+void stopAll(){
+   analogWrite(LB_Motor, 0);
+  analogWrite(RB_Motor, 0);
+  analogWrite(LF_Motor, 0);
+  analogWrite(RF_Motor, 0);
+  analogWrite(trigPin, LOW);
+  analogWrite(echoPin, LOW);
+}
 
-void fwd(int speed1){
-  analogWrite(LF_Motor, speed1);
-  analogWrite(RF_Motor, speed1);
+void fwd(int speed){
+  analogWrite(LF_Motor, speed);
+  analogWrite(RF_Motor, speed);
   analogWrite(LB_Motor, 0);
   analogWrite(RB_Motor, 0);
   
