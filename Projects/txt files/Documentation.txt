@@ -1,0 +1,18 @@
+--------------------------------
+    Documetation for code
+--------------------------------
+
+* Pins; *
+
+    Ultrasone: 
+            VCC: 5V
+            Trig (INPUT): pin 6
+            Echo: (OUTPUT): pin 7
+            GND: GND
+
+    Motors: 
+            RF_Motor: pin 3
+            RB_Motor: pin 4
+            LF_Motor: pin 9
+            LB_Motor: pin 5
+

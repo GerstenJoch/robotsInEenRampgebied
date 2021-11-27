@@ -1,0 +1,10 @@
+----------------------------
+            To-DO
+----------------------------
+
+*At School*
+Serial Monitor, for monitoring current actions.
+Cleanup code.
+
+*At School*
+Try with 2 arduino's: IR-Sensor for wireless data monitoring.
