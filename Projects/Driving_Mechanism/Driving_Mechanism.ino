@@ -16,6 +16,7 @@ int speed1;
 int ledPin = 11;
 
 void setup() {
+  Serial.begin(9600);
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
   pinMode(RF_Motor, OUTPUT);
@@ -28,19 +29,12 @@ void setup() {
 
 void loop() {
   distanceSensor();
-  digitalWrite(ledPin,LOW);
 
   // if cm is bigger then 20, if cm is smaller or equal to 20
-  if(cm > 20){
-  distanceSensor();
-  fwd(150);
-  delay(500);
-  digitalWrite(ledPin, LOW);
-  }
-
-  else {
+  if(cm <= 1 || cm > 20){
+  fwd(255);
+  }if (cm > 1 && cm <= 20) {
   stop();
-  digitalWrite(ledPin, HIGH);
   }
   
   /*delay(300);
@@ -116,4 +110,6 @@ void distanceSensor(){
       // Convert the time into a distance
   cm = (duration/2) / 29.1;     // Divide by 29.1 or multiply by 0.0343
   delay(250);
+  Serial.print(cm);
+  Serial.println(" cm");
 }
