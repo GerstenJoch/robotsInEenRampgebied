@@ -1,10 +1,11 @@
 #include "Robot.h"
 
 //wheels robot
-int RF_Motor = 3; //Right Front Motors front
-int LF_Motor = 9; //Left Front Motors front
-int LB_Motor = 5; //Left
+int RF_Motor = 3;
 int RB_Motor = 4;
+int LF_Motor = 9; 
+int LB_Motor = 5; 
+
 int speedAcc = 40;
 
 //ultrasonic sensor
@@ -28,17 +29,20 @@ void setup() {
 void loop() {
   distanceSensor();
   digitalWrite(ledPin,LOW);
+
+  // if cm is bigger then 20, if cm is smaller or equal to 20
   if(cm > 20){
   distanceSensor();
   fwd(150);
   delay(500);
-  digitalWrite(ledPin, HIGH);
+  digitalWrite(ledPin, LOW);
   }
-  if (cm <= 20){
+
+  else {
   stop();
   digitalWrite(ledPin, HIGH);
-  distanceSensor();
   }
+  
   /*delay(300);
   rotateRight(140);
   delay(400);
@@ -104,15 +108,12 @@ void distanceSensor(){
   digitalWrite(trigPin, HIGH);
   delayMicroseconds(10);
   digitalWrite(trigPin, LOW);
- 
-  // Read the signal from the sensor: a HIGH pulse whose
-  // duration is the time (in microseconds) from the sending
-  // of the ping to the reception of its echo off of an object.
+      // Read the signal from the sensor: a HIGH pulse whose
+      // duration is the time (in microseconds) from the sending
+      // of the ping to the reception of its echo off of an object.
   pinMode(echoPin, INPUT);
   duration = pulseIn(echoPin, HIGH);
- 
-  // Convert the time into a distance
+      // Convert the time into a distance
   cm = (duration/2) / 29.1;     // Divide by 29.1 or multiply by 0.0343
-  
   delay(250);
 }
