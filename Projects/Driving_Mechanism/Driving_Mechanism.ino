@@ -6,12 +6,14 @@ int LF_Motor = 9; //Left Front Motors front
 int LB_Motor = 5; //Left
 int RB_Motor = 4;
 int speedAcc = 40;
+
 //ultrasonic sensor
 int trigPin = 6;    // Trigger
 int echoPin = 7;    // Echo
-long duration, cm;
+double duration, cm;
 int speed1;
 int ledPin = 11;
+
 void setup() {
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
@@ -50,27 +52,29 @@ void loop() {
 }
 
 void rotateRight(int speed){
-      analogWrite(LF_Motor, speed);
-      analogWrite(RB_Motor, speed);
-      analogWrite(RF_Motor, 0);
-      analogWrite(LB_Motor, 0);
+  analogWrite(LF_Motor, speed);
+  analogWrite(RB_Motor, speed);
+  analogWrite(RF_Motor, 0);
+  analogWrite(LB_Motor, 0);
   
 }
 
 void rotateLeft(int speed){
-      analogWrite(LF_Motor, speed);
-      analogWrite(RB_Motor, speed);
-      analogWrite(RF_Motor, 0);
-      analogWrite(LB_Motor, 0);
+  analogWrite(LF_Motor, speed);
+  analogWrite(RB_Motor, speed);
+  analogWrite(RF_Motor, 0);
+  analogWrite(LB_Motor, 0);
 }
+
 void stop() {
   analogWrite(LB_Motor, 0);
   analogWrite(RB_Motor, 0);
   analogWrite(LF_Motor, 0);
   analogWrite(RF_Motor, 0);
 }
+
 void stopAll(){
-   analogWrite(LB_Motor, 0);
+  analogWrite(LB_Motor, 0);
   analogWrite(RB_Motor, 0);
   analogWrite(LF_Motor, 0);
   analogWrite(RF_Motor, 0);
@@ -85,6 +89,7 @@ void fwd(int speed){
   analogWrite(RB_Motor, 0);
   
 }
+
 void bwd(int speed1){
   analogWrite(LF_Motor, 0);
   analogWrite(RF_Motor, 0);
@@ -92,6 +97,7 @@ void bwd(int speed1){
   analogWrite(RB_Motor, speed1);
   
 }
+
 void distanceSensor(){
   digitalWrite(trigPin, LOW);
   delayMicroseconds(5);
