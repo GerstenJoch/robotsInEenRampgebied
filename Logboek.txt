@@ -1,0 +1,2 @@
+Vrijdag 26 november zijn we naar de RUG gegaan voor ons keuzecollege. We hebben de robot gekregen en methods geprogrammeerd voor 90 graden rotate, naar voren en naar achteren rijden en de snelheid kunnen aanpassen van de robot. Ook hebben we ons rampscenario gekozen waar we op gaan verdiepen
+Zaterdag 27 november & Zondag 28 november. We hebben een distance sensor aangesloten op de robot en ervoor gezorgd dat de robot stopt en andere functies uitvoert wanneer de robot een bepaalde afstand van een object is
