@@ -13,7 +13,8 @@ int trigPin = 6;    // Trigger
 int echoPin = 7;    // Echo
 double duration, cm;
 int speed1;
-int ledPin = 11;
+// vlam sensor
+int flamePin = 11;
 
 void setup() {
   Serial.begin(9600);
@@ -23,30 +24,12 @@ void setup() {
   pinMode(LF_Motor, OUTPUT);
   pinMode(RB_Motor, OUTPUT);
   pinMode(LB_Motor, OUTPUT);
-  pinMode(ledPin, OUTPUT);
+  pinMode(flamePin, INPUT);
 
 }
 
 void loop() {
-  distanceSensor();
-
-  // if cm is bigger then 20, if cm is smaller or equal to 20
-  if(cm <= 1 || cm > 20){
-  fwd(255);
-  }if (cm > 1 && cm <= 20) {
-  stop();
-  }
-  
-  /*delay(300);
-  rotateRight(140);
-  delay(400);
-  distanceSensor();
-  }/*
-  distanceSensor();
-  delay(300);
-  rotateRight(140);
-  delay(400);
-  distanceSensor();*/
+ fwd(255);
 }
 
 void rotateRight(int speed){
@@ -112,4 +95,17 @@ void distanceSensor(){
   delay(250);
   Serial.print(cm);
   Serial.println(" cm");
+}
+void distanceCheck() {
+   distanceSensor();
+  // if cm is bigger then 20, if cm is smaller or equal to 20
+  if(cm <= 1 || cm > 20){
+  fwd(180);
+  }if (cm > 1 && cm <= 20) {
+  stop();
+  delay(300);
+  rotateRight(140);
+  delay(400);
+  distanceSensor();
+  }
 }
