@@ -4,3 +4,5 @@ Maandag 29 november hebben we besproken hoe we de complexe, theoretische robot e
 Donderdag 2 december We hebben een frame gevonden waar we o.a. maandag voor aan het kijken was die perfect zou zijn voor de robot en hebben we laten 3d printen op school. Ook hebben we verder gebrainstormed voor ideeen voor het prototype en hebben arduino gevonden die Alexander en Sander thuis hebben lopen uittesten
 Maandag 6 december We hebben veel onderdelen geregeld voor ons project. We hebben meerdere componenten geprint voor het frame en verder besproken over wat we willen doen met de robot, thuis is Alexander beszig geweest met het verder ontwikkelen/ontwerpen van het frame van het boek. En heeft dezeonderdelen thuis 3D-geprint. 
 Donderdag 9 december We hebben de 3d- geprinte onderdelen in elkaar gezet en zijn verder bezig geweest de resterende onderdele te printen
+Maandag 13 december: Guido: in elkaar zetten robot, Sander: Pixie cam werkend krijgen Alexander: De gps sensor werkend krijgen.
+Donderdag 16 december: Guido: Solderen motoren en motoren proberen werkend te krijgen. Alexander: Afwezig, Sander: Pixy cam linken met Arduino en motoren werkende krijgen
