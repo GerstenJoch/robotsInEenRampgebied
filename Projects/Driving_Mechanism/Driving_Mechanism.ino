@@ -1,35 +1,51 @@
-#include "Robot.h"
+#include <Pixy2.h>
+#include <SPI.h>
 
 //wheels robot
 int RF_Motor = 3;
 int RB_Motor = 4;
 int LF_Motor = 9; 
 int LB_Motor = 5; 
-
-int speedAcc = 40;
-
+Pixy2 pixy;
 //ultrasonic sensor
 int trigPin = 6;    // Trigger
 int echoPin = 7;    // Echo
 double duration, cm;
 int speed1;
-// vlam sensor
-int flamePin = 11;
+int pixy_x;
+int pixy_y;
+int pixy_age;
+int i;
+int numCheck;
+
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
   pinMode(RF_Motor, OUTPUT);
   pinMode(LF_Motor, OUTPUT);
   pinMode(RB_Motor, OUTPUT);
   pinMode(LB_Motor, OUTPUT);
-  pinMode(flamePin, INPUT);
-
+  pixy.init();
 }
 
 void loop() {
- fwd(255);
+ objectDetection();
+ if (pixy_age < 50){
+   return;
+ } else {
+   if (pixy_x <= 150){
+       Serial.print("Object ");
+       Serial.print(i);
+       Serial.println("Left");
+   } else {
+       Serial.print("Object ");
+       Serial.print(i);
+       Serial.println("Right");
+       
+   }
+   }
 }
 
 void rotateRight(int speed){
@@ -93,8 +109,6 @@ void distanceSensor(){
       // Convert the time into a distance
   cm = (duration/2) / 29.1;     // Divide by 29.1 or multiply by 0.0343
   delay(250);
-  Serial.print(cm);
-  Serial.println(" cm");
 }
 void distanceCheck() {
    distanceSensor();
@@ -108,4 +122,23 @@ void distanceCheck() {
   delay(400);
   distanceSensor();
   }
+}
+void objectDetection(){ 
+  // grab blocks!
+  pixy.ccc.getBlocks();
+  
+  // If there are detect blocks, print them!
+  if (pixy.ccc.numBlocks)
+  {
+    //pixy.ccc.numBlocks)
+    for (i=0; i<pixy.ccc.numBlocks; i++)
+    {
+      pixy_x = pixy.ccc.blocks[i].m_x;
+      pixy_y = pixy.ccc.blocks[i].m_y;
+      pixy_age = pixy.ccc.blocks[i].m_age;
+      if (pixy.ccc.numBlocks > 1 && pixy_age > 90){
+     i = 1;
+    }
+   }
+  }  
 }

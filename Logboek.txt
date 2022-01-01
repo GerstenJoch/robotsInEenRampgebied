@@ -6,3 +6,4 @@ Maandag 6 december We hebben veel onderdelen geregeld voor ons project. We hebbe
 Donderdag 9 december We hebben de 3d- geprinte onderdelen in elkaar gezet en zijn verder bezig geweest de resterende onderdele te printen
 Maandag 13 december: Guido: in elkaar zetten robot, Sander: Pixie cam werkend krijgen Alexander: De gps sensor werkend krijgen.
 Donderdag 16 december: Guido: Solderen motoren en motoren proberen werkend te krijgen. Alexander: Afwezig, Sander: Pixy cam linken met Arduino en motoren werkende krijgen
+Zaterdag 1 januari: Sander heeft thuis de robot in elkaar gezet en alles gemonteerd op de afstandsensoren na, heeft de pixycam en de motoren werkende gekregen en heeft een begin gemaakt aan het algoritme voor de pixycam in verband met het rijden van de robot
