@@ -16,6 +16,7 @@ int pixy_x;
 int pixy_y;
 int pixy_age;
 int i;
+int x = 1;
 int j;
 int ageCheck;
 
@@ -32,6 +33,7 @@ void setup() {
 }
 
 void loop() {
+ //stop();
  objectDetection();
 }
 
@@ -117,6 +119,7 @@ void objectDetection(){
   // If there are detect blocks, print them!
   if (pixy.ccc.numBlocks)
   {
+    while (x != 0){
     //pixy.ccc.numBlocks)
     for (i=0; i<pixy.ccc.numBlocks; i++)
     {
@@ -136,27 +139,132 @@ void objectDetection(){
              else {
                ageCheck = l;
              }
+
+             //Runs if more than one object
              if (j+1 == pixy.ccc.numBlocks){
                if (pixy.ccc.blocks[j].m_age == ageCheck){
-
-               }
-               else{
-                 
+                 if (pixy_x <= 140){
+                   while (pixy_x <= 140){
+                   //rotateLeft(200);
+                   pixy.ccc.getBlocks();
+                   pixy_x = pixy.ccc.blocks[j].m_x;
+                 } while (pixy_x > 140 && pixy_x <= 170){
+                   //fwd(200);
+                   pixy.ccc.getBlocks();
+                   pixy_x = pixy.ccc.blocks[j].m_x;
+                 } while (pixy_x > 170){
+                   //rotateLeft(200);
+                   pixy.ccc.getBlocks();
+                   pixy_x = pixy.ccc.blocks[j].m_x;
+                 }
+                 x = 1;
+                } else if (pixy_x > 140 && pixy_x <= 170){
+                  while (pixy_x <= 140){
+                   //rotateLeft(200);
+                   pixy.ccc.getBlocks();
+                   pixy_x = pixy.ccc.blocks[j].m_x;
+                 } while (pixy_x > 140 && pixy_x <= 170){
+                   //fwd(200);
+                   pixy.ccc.getBlocks();
+                   pixy_x = pixy.ccc.blocks[j].m_x;
+                 } while (pixy_x > 170){
+                   //rotateLeft(200);
+                   pixy.ccc.getBlocks();
+                   pixy_x = pixy.ccc.blocks[j].m_x;
+                 }
+                 x = 1;
+                } else {
+                  while (pixy_x <= 140){
+                   //rotateLeft(200);
+                   pixy.ccc.getBlocks();
+                   pixy_x = pixy.ccc.blocks[j].m_x;
+                 } while (pixy_x > 140 && pixy_x <= 170){
+                   //fwd(200);
+                   pixy.ccc.getBlocks();
+                   pixy_x = pixy.ccc.blocks[j].m_x;
+                 } while (pixy_x > 170){
+                   //rotateLeft(200);
+                   pixy.ccc.getBlocks();
+                   pixy_x = pixy.ccc.blocks[j].m_x;
+                 }
+                 x = 1;
+              }
                }
              } 
            } 
-           } else if (pixy.ccc.numBlocks <= 1){
-           if (pixy_x <= 150){
-             Serial.print("Object ");
-             Serial.print(i);
-             Serial.println("Left");
-       } else {
-             Serial.print("Object ");
-             Serial.print(i);
-             Serial.println("Right");
-       }
-       }
+           } 
+           
+           //Runs if only one object
+
+           else if (pixy.ccc.numBlocks <= 1){
+           if (pixy_x <= 140){
+                while (pixy_x <= 140){
+                   //rotateLeft(200);
+                   pixy.ccc.getBlocks();
+                   pixy_x = pixy.ccc.blocks[j].m_x;
+                   Serial.println(pixy_x);
+                 } while (pixy_x > 140 && pixy_x <= 170){
+                   //fwd(200);
+                   pixy.ccc.getBlocks();
+                   pixy_x = pixy.ccc.blocks[j].m_x;
+                   Serial.println(pixy_x);
+                 } while (pixy_x > 170){
+                   //rotateLeft(200);
+                   pixy.ccc.getBlocks();
+                   pixy_x = pixy.ccc.blocks[j].m_x;
+                   Serial.println(pixy_x);
+                 }
+                 x = 1;
+                 } while (pixy_x > 140 && pixy_x <= 170){
+                   //fwd(200);
+                   Serial.println("bye");
+                   pixy.ccc.getBlocks();
+                   pixy_x = pixy.ccc.blocks[j].m_x;
+                   Serial.println(pixy_x);
+                 }
+                 x = 1;
+                } else if (pixy_x > 140 && pixy_x <= 170){
+                  while (pixy_x <= 140){
+                   //rotateLeft(200);
+                   pixy.ccc.getBlocks();
+                   pixy_x = pixy.ccc.blocks[j].m_x;
+                 } while (pixy_x > 140 && pixy_x <= 170){
+                   //fwd(200);
+                   pixy.ccc.getBlocks();
+                   pixy_x = pixy.ccc.blocks[j].m_x;
+                 } while (pixy_x > 170){
+                   //rotateLeft(200);
+                   pixy.ccc.getBlocks();
+                   pixy_x = pixy.ccc.blocks[j].m_x;
+                 }
+                 x = 1;
+                } else {
+                while (pixy_x <= 140){
+                   //rotateLeft(200);
+                   pixy.ccc.getBlocks();
+                   pixy_x = pixy.ccc.blocks[j].m_x;
+                 } while (pixy_x > 140 && pixy_x <= 170){
+                   //fwd(200);
+                   pixy.ccc.getBlocks();
+                   pixy_x = pixy.ccc.blocks[j].m_x;
+                 } while (pixy_x > 170){
+                   //rotateLeft(200);
+                   pixy.ccc.getBlocks();
+                   pixy_x = pixy.ccc.blocks[j].m_x;
+                 }
+                 x = 1;
+              }
          }
+         
+    }
     }
    }
+}
+void checkPixyValues(){
+  /*for (i=0; i<pixy.ccc.numBlocks; i++)
+    {
+      pixy_x = pixy.ccc.blocks[i].m_x;
+      pixy_y = pixy.ccc.blocks[i].m_y;
+      pixy_age = pixy.ccc.blocks[i].m_age;
+    }*/
 }
