@@ -16,7 +16,8 @@ int pixy_x;
 int pixy_y;
 int pixy_age;
 int i;
-int numCheck;
+int j;
+int ageCheck;
 
 
 void setup() {
@@ -32,20 +33,6 @@ void setup() {
 
 void loop() {
  objectDetection();
- if (pixy_age < 50){
-   return;
- } else {
-   if (pixy_x <= 150){
-       Serial.print("Object ");
-       Serial.print(i);
-       Serial.println("Left");
-   } else {
-       Serial.print("Object ");
-       Serial.print(i);
-       Serial.println("Right");
-       
-   }
-   }
 }
 
 void rotateRight(int speed){
@@ -136,9 +123,40 @@ void objectDetection(){
       pixy_x = pixy.ccc.blocks[i].m_x;
       pixy_y = pixy.ccc.blocks[i].m_y;
       pixy_age = pixy.ccc.blocks[i].m_age;
-      if (pixy.ccc.numBlocks > 1 && pixy_age > 90){
-     i = 1;
+       if (pixy_age < 30){
+         return;
+         } else {
+           if (pixy.ccc.numBlocks > 1){
+             for (j = 1; j < pixy.ccc.numBlocks; j++){
+              int k = pixy.ccc.blocks[j].m_age;
+             int l = pixy.ccc.blocks[j-1].m_age;
+             if (k > l){
+               ageCheck = k;
+             }
+             else {
+               ageCheck = l;
+             }
+             if (j+1 == pixy.ccc.numBlocks){
+               if (pixy.ccc.blocks[j].m_age == ageCheck){
+
+               }
+               else{
+                 
+               }
+             } 
+           } 
+           } else if (pixy.ccc.numBlocks <= 1){
+           if (pixy_x <= 150){
+             Serial.print("Object ");
+             Serial.print(i);
+             Serial.println("Left");
+       } else {
+             Serial.print("Object ");
+             Serial.print(i);
+             Serial.println("Right");
+       }
+       }
+         }
     }
    }
-  }  
 }
