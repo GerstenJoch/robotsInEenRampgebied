@@ -147,14 +147,17 @@ void objectDetection(){
                    while (pixy_x <= 140){
                    //rotateLeft(200);
                    pixy.ccc.getBlocks();
+                   checkJValue();
                    pixy_x = pixy.ccc.blocks[j].m_x;
                  } while (pixy_x > 140 && pixy_x <= 170){
                    //fwd(200);
                    pixy.ccc.getBlocks();
+                   checkJValue();
                    pixy_x = pixy.ccc.blocks[j].m_x;
                  } while (pixy_x > 170){
                    //rotateLeft(200);
                    pixy.ccc.getBlocks();
+                   checkJValue();
                    pixy_x = pixy.ccc.blocks[j].m_x;
                  }
                  x = 1;
@@ -162,14 +165,17 @@ void objectDetection(){
                   while (pixy_x <= 140){
                    //rotateLeft(200);
                    pixy.ccc.getBlocks();
+                   checkJValue();
                    pixy_x = pixy.ccc.blocks[j].m_x;
                  } while (pixy_x > 140 && pixy_x <= 170){
                    //fwd(200);
                    pixy.ccc.getBlocks();
+                   checkJValue();
                    pixy_x = pixy.ccc.blocks[j].m_x;
                  } while (pixy_x > 170){
                    //rotateLeft(200);
                    pixy.ccc.getBlocks();
+                   checkJValue();
                    pixy_x = pixy.ccc.blocks[j].m_x;
                  }
                  x = 1;
@@ -177,14 +183,17 @@ void objectDetection(){
                   while (pixy_x <= 140){
                    //rotateLeft(200);
                    pixy.ccc.getBlocks();
+                   checkJValue();
                    pixy_x = pixy.ccc.blocks[j].m_x;
                  } while (pixy_x > 140 && pixy_x <= 170){
                    //fwd(200);
                    pixy.ccc.getBlocks();
+                   checkJValue();
                    pixy_x = pixy.ccc.blocks[j].m_x;
                  } while (pixy_x > 170){
                    //rotateLeft(200);
                    pixy.ccc.getBlocks();
+                   checkJValue();
                    pixy_x = pixy.ccc.blocks[j].m_x;
                  }
                  x = 1;
@@ -201,16 +210,19 @@ void objectDetection(){
                 while (pixy_x <= 140){
                    //rotateLeft(200);
                    pixy.ccc.getBlocks();
+                   checkJValue();
                    pixy_x = pixy.ccc.blocks[j].m_x;
                    Serial.println(pixy_x);
                  } while (pixy_x > 140 && pixy_x <= 170){
                    //fwd(200);
                    pixy.ccc.getBlocks();
+                   checkJValue();
                    pixy_x = pixy.ccc.blocks[j].m_x;
                    Serial.println(pixy_x);
                  } while (pixy_x > 170){
                    //rotateLeft(200);
                    pixy.ccc.getBlocks();
+                   checkJValue();
                    pixy_x = pixy.ccc.blocks[j].m_x;
                    Serial.println(pixy_x);
                  }
@@ -219,6 +231,7 @@ void objectDetection(){
                    //fwd(200);
                    Serial.println("bye");
                    pixy.ccc.getBlocks();
+                   checkJValue();
                    pixy_x = pixy.ccc.blocks[j].m_x;
                    Serial.println(pixy_x);
                  }
@@ -227,14 +240,17 @@ void objectDetection(){
                   while (pixy_x <= 140){
                    //rotateLeft(200);
                    pixy.ccc.getBlocks();
+                   checkJValue();
                    pixy_x = pixy.ccc.blocks[j].m_x;
                  } while (pixy_x > 140 && pixy_x <= 170){
                    //fwd(200);
                    pixy.ccc.getBlocks();
+                   checkJValue();
                    pixy_x = pixy.ccc.blocks[j].m_x;
                  } while (pixy_x > 170){
                    //rotateLeft(200);
                    pixy.ccc.getBlocks();
+                   checkJValue();
                    pixy_x = pixy.ccc.blocks[j].m_x;
                  }
                  x = 1;
@@ -242,14 +258,17 @@ void objectDetection(){
                 while (pixy_x <= 140){
                    //rotateLeft(200);
                    pixy.ccc.getBlocks();
+                   checkJValue();
                    pixy_x = pixy.ccc.blocks[j].m_x;
                  } while (pixy_x > 140 && pixy_x <= 170){
                    //fwd(200);
                    pixy.ccc.getBlocks();
+                   checkJValue();
                    pixy_x = pixy.ccc.blocks[j].m_x;
                  } while (pixy_x > 170){
                    //rotateLeft(200);
                    pixy.ccc.getBlocks();
+                   checkJValue();
                    pixy_x = pixy.ccc.blocks[j].m_x;
                  }
                  x = 1;
@@ -260,11 +279,13 @@ void objectDetection(){
     }
    }
 }
-void checkPixyValues(){
-  /*for (i=0; i<pixy.ccc.numBlocks; i++)
+void checkJValue(){
+  for (int g=0; g<pixy.ccc.numBlocks; g++)
     {
-      pixy_x = pixy.ccc.blocks[i].m_x;
-      pixy_y = pixy.ccc.blocks[i].m_y;
-      pixy_age = pixy.ccc.blocks[i].m_age;
-    }*/
+      int min = pixy.ccc.blocks[g].m_x - 10;
+      int max = pixy.ccc.blocks[g].m_x + 10;
+      if (min >= pixy.ccc.blocks[j].m_x && max <= pixy.ccc.blocks[j].m_x){
+        j = g;
+      }
+    }
 }
