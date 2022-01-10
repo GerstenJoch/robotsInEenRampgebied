@@ -12,8 +12,8 @@ int trigPinF = 12;    // Trigger
 int echoPinF = 13;    // Echo
 int trigPinL = 10;
 int echoPinL = 11;
-int trigPinR;
-int echoPinR;
+int trigPinR;         //Moet nog sensor aangesloten
+int echoPinR;         //""
 double duration, cmF,cmR,cmL;
 //pixycam
 Pixy2 pixy;
