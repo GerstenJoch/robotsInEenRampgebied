@@ -19,8 +19,6 @@ void setup() {
   pinMode(LF_Motor, OUTPUT);
   pinMode(RB_Motor, OUTPUT);
   pinMode(LB_Motor, OUTPUT);
-
-
 }
 
 void loop() {
