@@ -27,8 +27,10 @@ int ageCheck;
 //Button & Buzzer
 int button = 2;
 int isButtonPressed = 0;
-int onOrOff;
+int onOrOff = 2;
 int buzzer = 8;
+//overig
+int intergratedLed = 13;
 
 
 void setup() {
@@ -45,18 +47,26 @@ void setup() {
   pinMode(LB_Motor, OUTPUT);
   pinMode(button, INPUT);
   pinMode(buzzer, OUTPUT);
+  pinMode(intergratedLed, OUTPUT);
   pixy.init();
+  intergratedLed = LOW;
+  isButtonPressed = 0;
 }
 
 void loop() {
   onOrOffCheck();
 if (onOrOff == 1){
-  fwd(255);
+  intergratedLed = HIGH;
   objectDetection();
-  distanceCheck();
+  distanceCheck(); 
+  Serial.print("OnOff");
+  Serial.println(onOrOff);
 } else if (onOrOff == 0){
+  intergratedLed = LOW;
   stopAll();
-}
+  }
+  Serial.print("Button");
+  Serial.println(isButtonPressed);
 }
 void rotateRight(int speed, int time){
   analogWrite(LF_Motor, speed);
@@ -112,7 +122,7 @@ void bwd(int speed1){
   
 }
 void onOrOffCheck(){
-   int buttonOutput = analogRead(button);
+   int buttonOutput = digitalRead(button);
  if (isButtonPressed == 0 && buttonOutput == HIGH){
   onOrOff = 1; 
   isButtonPressed = 1;
@@ -123,6 +133,7 @@ void onOrOffCheck(){
   delay(200);
 }
 }
+
 void distanceSensorFront(){
   digitalWrite(trigPinF, LOW);
   delayMicroseconds(5);
