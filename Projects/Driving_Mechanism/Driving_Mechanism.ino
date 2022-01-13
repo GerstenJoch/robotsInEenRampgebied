@@ -2,16 +2,16 @@
 #include <SPI.h>
 
 //wheels robot
-int RB_Motor = 3;
-int RF_Motor = 4;
-int LB_Motor = 9; 
-int LF_Motor = 5; 
+const int RB_Motor = 3;
+const int RF_Motor = 4;
+const int LB_Motor = 9; 
+const int LF_Motor = 5; 
 int speed1;
 //ultrasonic sensor
-int trigPinF = 12;    // Trigger
-int echoPinF = 13;    // Echo
-int trigPinL = 10;
-int echoPinL = 11;
+const int trigPinF = 12;    // Trigger
+const int echoPinF = 13;    // Echo
+const int trigPinL = 10;
+const int echoPinL = 11;
 int trigPinR;         //Moet nog sensor aangesloten
 int echoPinR;         //""
 double duration, cmF,cmR,cmL;
@@ -25,13 +25,12 @@ int x = 1;
 int j;
 int ageCheck;
 //Button & Buzzer
-int button = 2;
-int isButtonPressed = 0;
-int onOrOff = 2;
-int buzzer = 8;
-//overig
-int intergratedLed = 13;
-
+const int startButton = 2;
+int startButtonState;
+const int buzzer = 8;
+const int ledPin = 6;
+const int stopButtonPin = 7;
+int stopButtonState;
 
 void setup() {
   Serial.begin(9600);
@@ -45,29 +44,45 @@ void setup() {
   pinMode(LF_Motor, OUTPUT);
   pinMode(RB_Motor, OUTPUT);
   pinMode(LB_Motor, OUTPUT);
-  pinMode(button, INPUT);
+  pinMode(startButton, INPUT);
   pinMode(buzzer, OUTPUT);
-  pinMode(intergratedLed, OUTPUT);
+  pinMode(ledPin, OUTPUT);
+  pinMode(stopButtonPin, INPUT);
   pixy.init();
-  intergratedLed = LOW;
-  isButtonPressed = 0;
+  digitalWrite(ledPin, LOW);  
 }
 
 void loop() {
-  onOrOffCheck();
-if (onOrOff == 1){
-  intergratedLed = HIGH;
-  objectDetection();
-  distanceCheck(); 
-  Serial.print("OnOff");
-  Serial.println(onOrOff);
-} else if (onOrOff == 0){
-  intergratedLed = LOW;
-  stopAll();
+  startButtonState = digitalRead(startButton);
+  stopButtonState = digitalRead(stopButtonPin);
+  
+  if (startButtonState == HIGH) {
+    Serial.print("Protocol initiated /n");
+   // while (true){    
+    digitalWrite(ledPin, HIGH);
+    fwd(255);
+    //objectDetection();
+    //distanceCheck();
+   
+   // stopButtonState = digitalRead(stopButtonPin);
+   // if (stopButtonState == HIGH){
+   //   return false;
+   // }
+   // }
   }
-  Serial.print("Button");
-  Serial.println(isButtonPressed);
+  if (stopButtonState == HIGH) {
+    Serial.print("Protocol stopped /n");
+    //while (true){        
+    digitalWrite(ledPin, LOW);
+    stopAll();
+    //startButtonState = digitalRead(startButton);
+ //   if (startButtonState == HIGH){
+ //     return false;
+  //  }
+  }
 }
+//}
+//}
 void rotateRight(int speed, int time){
   analogWrite(LF_Motor, speed);
   analogWrite(RB_Motor, speed);
@@ -107,7 +122,7 @@ void stopAll(){
 }
 
 void fwd(int speed){
-  analogWrite(LF_Motor, speed);
+  analogWrite(LF_Motor, speed - 30);
   analogWrite(RF_Motor, speed);
   analogWrite(LB_Motor, 0);
   analogWrite(RB_Motor, 0);
@@ -121,7 +136,7 @@ void bwd(int speed1){
   analogWrite(RB_Motor, speed1);
   
 }
-void onOrOffCheck(){
+/*void onOrOffCheck(){
    int buttonOutput = digitalRead(button);
  if (isButtonPressed == 0 && buttonOutput == HIGH){
   onOrOff = 1; 
@@ -133,6 +148,7 @@ void onOrOffCheck(){
   delay(200);
 }
 }
+*/
 
 void distanceSensorFront(){
   digitalWrite(trigPinF, LOW);
