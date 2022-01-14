@@ -210,28 +210,39 @@ void distanceLeftRightCheck(){
   distanceSensorRight();
   if (cmR > 20){
     rotateRight(255, 500);
+    Serial.print("Check complete on right sensor, turning right /n");
     return;
   } else if (cmR <= 20) {
     distanceSensorLeft();
     if (cmL > 20){
       rotateLeft(255, 500);
+      Serial.print("Not enough space on right side, turning left /n");
       return;
     } else if (cmL <= 20) {
         while (cmL <= 20 && cmR <= 20){
           bwd(255);
+          Serial.print("Not enough space on left and right, moving in reverse /n");
           distanceSensorLeft();
           distanceSensorRight();
         }
         if (cmL > 20){
           stop();
           rotateLeft(255, 500);
+          Serial.print("Found enough space on left side, stopping on return and rotating left. /n");
         } if (cmR >20){
           stop();
           rotateLeft(255, 500);
+          Serial.print("Found enough space on right side, stopping on return and rotating right. /n");
         }
   }
   }
 }
+/*void collisionCheck() {
+  if (cmF > 20);
+  stopAll();
+}
+*/
+
 void objectDetection(){ 
   /*// grab blocks!
   pixy.ccc.getBlocks();
