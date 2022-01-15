@@ -3,8 +3,10 @@
 ----------------------------
 
 *At Office*
-Serial Monitor, for monitoring current actions.
-Cleanup code.
-
+Finishing the pixycam code
+Making the draft report
+Thinking about the presentation
 *At School*
-Try with 2 arduino's: IR-Sensor for wireless data monitoring.
+Making a marker for camera detection
+Adding a Distance sensor to the robot and testing it and changing code if it doesn't work
+Making the parkour

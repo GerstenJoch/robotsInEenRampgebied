@@ -27,12 +27,11 @@ int ageCheck;
 //Button & Buzzer
 const int startButton = 2;
 int startButtonState;
-const int buzzer = 8;
 const int ledPin = 6;
 const int stopButtonPin = 7;
 int stopButtonState;
 
-void setup() {
+void setup() {                        //Let's all the components initiate
   Serial.begin(9600);
   pinMode(trigPinF, OUTPUT);
   pinMode(echoPinF, INPUT);
@@ -45,7 +44,6 @@ void setup() {
   pinMode(RB_Motor, OUTPUT);
   pinMode(LB_Motor, OUTPUT);
   pinMode(startButton, INPUT);
-  pinMode(buzzer, OUTPUT);
   pinMode(ledPin, OUTPUT);
   pinMode(stopButtonPin, INPUT);
   pixy.init();
@@ -53,10 +51,10 @@ void setup() {
 }
 
 void loop() {
-  startButtonState = digitalRead(startButton);
+  startButtonState = digitalRead(startButton);                         //Checks the state of the start and stop buttons
   stopButtonState = digitalRead(stopButtonPin);
   
-  if (startButtonState == HIGH) {
+  if (startButtonState == HIGH) {                                      //Robot starts when startbutton is pressed
     Serial.print("Protocol initiated /n");
    // while (true){    
     digitalWrite(ledPin, HIGH);
@@ -70,7 +68,7 @@ void loop() {
    // }
    // }
   }
-  if (stopButtonState == HIGH) {
+  if (stopButtonState == HIGH) {                                       //Robot stops when stopbutton is pressed
     Serial.print("Protocol stopped /n");
     //while (true){        
     digitalWrite(ledPin, LOW);
@@ -83,7 +81,9 @@ void loop() {
 }
 //}
 //}
-void rotateRight(int speed, int time){
+
+//Driving functions these can be call in the logic and alorithms to be more efficient when coding
+void rotateRight(int speed, int time){                               
   analogWrite(LF_Motor, speed);
   analogWrite(RB_Motor, speed);
   analogWrite(RF_Motor, 0);
@@ -91,7 +91,7 @@ void rotateRight(int speed, int time){
   delay(time);
   stop();
 }
-
+                                                                        
 void rotateLeft(int speed, int time){
   analogWrite(LF_Motor, 0);
   analogWrite(RB_Motor, 0);
@@ -136,33 +136,17 @@ void bwd(int speed1){
   analogWrite(RB_Motor, speed1);
   
 }
-/*void onOrOffCheck(){
-   int buttonOutput = digitalRead(button);
- if (isButtonPressed == 0 && buttonOutput == HIGH){
-  onOrOff = 1; 
-  isButtonPressed = 1;
-  delay(200);
-}if (isButtonPressed == 1 && buttonOutput == HIGH){
-  onOrOff = 0;
-  isButtonPressed = 0;
-  delay(200);
-}
-}
-*/
 
+//Functions for the ultrasonic distance sensor to call them later. This makes coding easier
 void distanceSensorFront(){
   digitalWrite(trigPinF, LOW);
   delayMicroseconds(5);
   digitalWrite(trigPinF, HIGH);
   delayMicroseconds(10);
   digitalWrite(trigPinF, LOW);
-      // Read the signal from the sensor: a HIGH pulse whose
-      // duration is the time (in microseconds) from the sending
-      // of the ping to the reception of its echo off of an object.
   pinMode(echoPinF, INPUT);
   duration = pulseIn(echoPinF, HIGH);
-      // Convert the time into a distance
-  cmF = (duration/2) / 29.1;     // Divide by 29.1 or multiply by 0.0343
+  cmF = (duration/2) / 29.1;
   delay(10);
 }
 
@@ -196,6 +180,9 @@ void distanceSensorLeft(){
   cmL = (duration/2) / 29.1;     // Divide by 29.1 or multiply by 0.0343
   delay(10);
 }
+
+//These 2 functions are used for the logic to let the robot stop when it's nearing a wall and let it find it's way through
+
 void distanceCheck() {
   distanceSensorFront();
   // if cm is bigger then 20, if cm is smaller or equal to 20
@@ -210,13 +197,13 @@ void distanceLeftRightCheck(){
   distanceSensorRight();
   if (cmR > 20){
     rotateRight(255, 500);
-    Serial.print("Check complete on right sensor, turning right /n");
+    Serial.print("Check complete on RIGHT sensor, turning right /n");
     return;
   } else if (cmR <= 20) {
     distanceSensorLeft();
     if (cmL > 20){
       rotateLeft(255, 500);
-      Serial.print("Not enough space on right side, turning left /n");
+      Serial.print("Check complete on LEFT sensor, turning right /n");
       return;
     } else if (cmL <= 20) {
         while (cmL <= 20 && cmR <= 20){
@@ -237,13 +224,60 @@ void distanceLeftRightCheck(){
   }
   }
 }
-/*void collisionCheck() {
-  if (cmF > 20);
-  stopAll();
-}
-*/
-
+//Function for the pixy cam. The camera detection. It look if the detected object is left or right. Depending on that, 
+//it rotates and drives the robot until it's right in front of it
+//It goes to a filtering system to make sure when more that 1 object is detected,
+//It detects the right one.
 void objectDetection(){ 
+  pixy.ccc.getBlocks();
+  
+  // If there are detect blocks, print them!
+  if (pixy.ccc.numBlocks)
+  {
+    //pixy.ccc.numBlocks)
+    for (i=0; i<pixy.ccc.numBlocks; i++)
+    {
+      pixy_x = pixy.ccc.blocks[i].m_x;
+      pixy_y = pixy.ccc.blocks[i].m_y;
+      pixy_age = pixy.ccc.blocks[i].m_age;
+      pixy_width = pixy.ccc.blocks[i].m_width;
+      pixy_height = pixy.ccc.blocks[i].m_height;
+      if (pixy_age > 30){
+        if (!(pixy_y <=50 || pixy_y >= 250)){
+          if ((!(pixy_width <= 10 || pixy_width >= 50)) || (!(pixy_height <= 10 || pixy_height >= 50))){
+            if (pixy_x <= 140){
+              while (pixy_x <= 140){
+              } while (pixy_x > 140 && pixy_x <= 170){
+
+              } while (pixy_x > 170){
+
+              }
+              }
+
+              if (pixy_x <= 140){
+              while (pixy_x <= 140){
+              
+              } while (pixy_x > 140 && pixy_x <= 170){
+
+              } while (pixy_x > 170){
+
+              }
+              }
+
+              if (pixy_x <= 140){
+              while (pixy_x <= 140){
+              
+              } while (pixy_x > 140 && pixy_x <= 170){
+
+              } while (pixy_x > 170){
+
+              }
+              }
+          }
+        }
+    }
+    }
+  } 
   /*// grab blocks!
   pixy.ccc.getBlocks();
   

@@ -2,17 +2,85 @@
     Documetation for code
 --------------------------------
 
+* Info; *
+    This is the code for a robot made for camera detection and making it's way
+    through rough terrain. It's a prototype for a theoretic robot that can detect
+    people in areas like warzones and earthquake zones and send their location to
+    a datacenter. These approximate locations can be of use to send rescue teams to the
+    right location.
 * Pins; *
 
-    Ultrasone: 
+    Ultrasonic Sensors: 
+        Forward:
             VCC: 5V
-            Trig (INPUT): pin 6
-            Echo: (OUTPUT): pin 7
+            Trig (INPUT): pin 12
+            Echo: (OUTPUT): pin 13
+            GND: GND
+        Left:
+            VCC: 5V
+            Trig (INPUT): pin 10
+            Echo: (OUTPUT): pin 11
+            GND: GND
+        Right:
+            VCC: 5V
+            Trig (INPUT): pin >
+            Echo: (OUTPUT): pin ?
             GND: GND
 
     Motors: 
-            RF_Motor: pin 3
-            RB_Motor: pin 4
-            LF_Motor: pin 9
-            LB_Motor: pin 5
+            RB_Motor: pin 3
+            RF_Motor: pin 4
+            LB_Motor: pin 9
+            LF_Motor: pin 5
+    Buttons:
+            startButton: pin 2
+            stopButton: pin 7
+* Functions; *
+    Integrated functions:
+        void setup(): 
+            Initiates all the components (Runs once).
+        void loop(): 
+            Loops all the code. 
+
+    Driving functions:
+        void rotateRight():
+            Rotates to the right given a speed and time
+        void rotateLeft():
+            Rotates to the left with a given speed and time
+        void stop():
+            Stops the driving motors only
+        void stopAll(): 
+            Puts everything on low (stops but still on)
+        void fwd():
+            Drives the robot forward given a speed
+        void bwd():
+            Drives tje robot backwards given a speed
+    Ultrasonic functions:
+        void distanceSensorFront():  
+            Checks the distance to the nearest object from the front
+        void distanceSensorLeft():
+            Checks the distance to the nearest object from the left
+        void distanceSensorRight():
+            Checks the distance to the nearest object from the right
+        void distanceCheck():
+            Checks the front sensor. If the distance to the nearest object
+            is less than 20cm, it stops and checks the left and right sensor
+            to find a way to navigate
+        void distanceLeftRightCheck():
+            First checks the right sensor. If there is enough space between,
+            it rotates the the right else it checks the left sensor and checks
+            the same thing. If both sensors are free, it rotates to the right and
+            if neither are free, it goes backwards until it finds an opening on the left
+            or the right
+    Pixy2cam function:
+        void objectDetection(): 
+            Iterates through the detected objects by the camera. To make sure a right object
+            is detected it only takes a object which age is at least 30, y pixels are above
+            50 and below 250 and width/height is higher than 10 and lower than 50
+            After taken the right object, it rotates towards the middle depending on the x value
+            of the object. If it's roughly in the middle, it drives forward until it's right in front
+            of it.
+
+        
+
 
