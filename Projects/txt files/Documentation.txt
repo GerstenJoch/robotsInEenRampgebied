@@ -41,7 +41,10 @@
             Initiates all the components (Runs once).
         void loop(): 
             Loops all the code. 
-
+    General function:
+	void justWork():
+	    Runs the program. This function is created
+	    as a joke :]
     Driving functions:
         void rotateRight():
             Rotates to the right given a speed and time

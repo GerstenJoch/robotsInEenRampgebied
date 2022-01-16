@@ -49,37 +49,41 @@ void setup() {                        //Let's all the components initiate
 }
 
 void loop() {
-  startButtonState = digitalRead(startButton);                         //Checks the state of the start and stop buttons
+  justWork();
+}
+
+void justWork(){
+    startButtonState = digitalRead(startButton);                         //Checks the state of the start and stop buttons
   stopButtonState = digitalRead(stopButtonPin);
   
   if (startButtonState == HIGH) {                                      //Robot starts when startbutton is pressed
     Serial.print("Protocol initiated /n");
-   // while (true){    
+  
     digitalWrite(ledPin, HIGH);
     fwd(255);
-    //objectDetection();
-    //distanceCheck();
+    /* while (true){  
+    objectDetection();
+    distanceCheck();
    
-   // stopButtonState = digitalRead(stopButtonPin);
-   // if (stopButtonState == HIGH){
-   //   return false;
-   // }
-   // }
+    stopButtonState = digitalRead(stopButtonPin);
+    if (stopButtonState == HIGH){
+      return false;
+    }
+    } */
   }
   if (stopButtonState == HIGH) {                                       //Robot stops when stopbutton is pressed
     Serial.print("Protocol stopped /n");
-    //while (true){        
     digitalWrite(ledPin, LOW);
     stopAll();
-    //startButtonState = digitalRead(startButton);
- //   if (startButtonState == HIGH){
- //     return false;
-  //  }
+    /*while (true){        
+    startButtonState = digitalRead(startButton);
+     if (startButtonState == HIGH){
+      return false;
+    }
+    }
+    }*/
   }
 }
-//}
-//}
-
 //Driving functions these can be call in the logic and alorithms to be more efficient when coding
 void rotateRight(int speed, int time){                               
   analogWrite(LF_Motor, speed);
