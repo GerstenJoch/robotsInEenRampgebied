@@ -10,4 +10,4 @@ Zaterdag 1 januari: Sander heeft thuis de robot in elkaar gezet en alles gemonte
 Zondag 2 januari & Maandag 3 januari: Sander is thuis bezig geweest met het programma van de pixycam en is bijna klaar met het programma
 Maandag 10 januari: Alexander Sander en Guido hebben de robot getest, omdat hij veel veranderingen is ondergaan en (bijna) alles opgelost. Alexander heeft zijn tracks die hij in de vakantie heeft geprint erop gezet. De robot kan nu rijden.
 Donderdag 13 januari: Sander en Alexander zijn bezig geweest met het oplossen van een probleem met de robot, Guido is bezig geweest met het ontwerpen van de theoretische robot en een begin aan het rapport gemaakt.
-Zaterdag 16 januari: Sander is thuis bezig geweest met de code van de pixycam en heeft een to do list en een documentatie geschreven
+Zaterdag 16 januari & Zondag 17 januari: Sander is thuis bezig geweest met de code van de pixycam en heeft een to do list en een documentatie geschreven

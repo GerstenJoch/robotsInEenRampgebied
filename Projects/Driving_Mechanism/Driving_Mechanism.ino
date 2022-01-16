@@ -17,11 +17,9 @@ int echoPinR;         //""
 double duration, cmF,cmR,cmL;
 //pixycam
 Pixy2 pixy;
-int pixy_x;
-int pixy_y;
-int pixy_age;
+int pixy_x, pixy_y,pixy_age,pixy_width,pixy_height, pixy_old_x;
+int pixy_x_j, pixy_y_j,pixy_age_j,pixy_width_j,pixy_height_j;
 int i;
-int x = 1;
 int j;
 int ageCheck;
 //Button & Buzzer
@@ -245,222 +243,94 @@ void objectDetection(){
       if (pixy_age > 30){
         if (!(pixy_y <=50 || pixy_y >= 250)){
           if ((!(pixy_width <= 10 || pixy_width >= 50)) || (!(pixy_height <= 10 || pixy_height >= 50))){
-            if (pixy_x <= 140){
+            pixy_old_x = pixy_x;
+            if (pixy_old_x <= 140){
               while (pixy_x <= 140){
+                rotateLeft(255,500);
+                pixy.ccc.getBlocks();
+                pixyBlockCheck();
               } while (pixy_x > 140 && pixy_x <= 170){
-
+                fwd(255);
+                pixy.ccc.getBlocks();
+                pixyBlockCheck();
+                distanceSensorFront();
+                if(cmF <= 1 || cmF > 20){
+                fwd(180);
+                }if (cmF > 1 && cmF <= 20) {
+                stop();
+                break;
+                }
               } while (pixy_x > 170){
-
+                rotateRight(255,500);
+                pixy.ccc.getBlocks();
+                pixyBlockCheck();
               }
               }
 
-              if (pixy_x <= 140){
+              if (pixy_old_x > 140 && pixy_old_x <= 170){
               while (pixy_x <= 140){
-              
+                rotateLeft(255,500);
+                pixy.ccc.getBlocks();
+                pixyBlockCheck();
               } while (pixy_x > 140 && pixy_x <= 170){
-
+                fwd(255);
+                pixy.ccc.getBlocks();
+                pixyBlockCheck();
+                distanceSensorFront();
+                if(cmF <= 1 || cmF > 20){
+                fwd(180);
+                }if (cmF > 1 && cmF <= 20) {
+                stop();
+                break;
+                }
               } while (pixy_x > 170){
-
+                rotateRight(255,500);
+                pixy.ccc.getBlocks();
+                pixyBlockCheck();
               }
               }
 
-              if (pixy_x <= 140){
+              if (pixy_old_x > 170){
               while (pixy_x <= 140){
-              
+                rotateLeft(255,500);
+                pixy.ccc.getBlocks();
+                pixyBlockCheck();
               } while (pixy_x > 140 && pixy_x <= 170){
-
+                fwd(255);
+                pixy.ccc.getBlocks();
+                pixyBlockCheck();
+                distanceSensorFront();
+                if(cmF <= 1 || cmF > 20){
+                fwd(180);
+                }if (cmF > 1 && cmF <= 20) {
+                stop();
+                break;
+                }
               } while (pixy_x > 170){
-
+                rotateRight(255,500);
+                pixy.ccc.getBlocks();
+                pixyBlockCheck();
               }
               }
           }
         }
     }
     }
-  } 
-  /*// grab blocks!
-  pixy.ccc.getBlocks();
-  
-  // If there are detect blocks, print them!
-  if (pixy.ccc.numBlocks)
-  {
-    //pixy.ccc.numBlocks)
-    for (i=0; i<pixy.ccc.numBlocks; i++)
-    {
-      pixy_x = pixy.ccc.blocks[i].m_x;
-      pixy_y = pixy.ccc.blocks[i].m_y;
-      pixy_age = pixy.ccc.blocks[i].m_age;
-    }
-    if (pixy_age > 30){
-
-    }
-       /*if (pixy_age < 30){
-         return;
-         } else {
-           if (pixy.ccc.numBlocks > 1){
-             for (j = 1; j < pixy.ccc.numBlocks; j++){
-              int k = pixy.ccc.blocks[j].m_age;
-             int l = pixy.ccc.blocks[j-1].m_age;
-             if (k > l){
-               ageCheck = k;
-             }
-             else {
-               ageCheck = l;
-             }
-
-             //Runs if more than one object
-             if (j+1 == pixy.ccc.numBlocks){
-               if (pixy.ccc.blocks[j].m_age == ageCheck){
-                 if (pixy_x <= 140){
-                   while (pixy_x <= 140){
-                   rotateLeft(200);
-                   pixy.ccc.getBlocks();
-                   checkJValue();
-                   pixy_x = pixy.ccc.blocks[j].m_x;
-                   Serial.println(pixy_x);
-                 } while (pixy_x > 140 && pixy_x <= 170){
-                   fwd(200);
-                   pixy.ccc.getBlocks();
-                   checkJValue();
-                   pixy_x = pixy.ccc.blocks[j].m_x;
-                   Serial.println(pixy_x);
-                 } while (pixy_x > 170){
-                   rotateLeft(200);
-                   pixy.ccc.getBlocks();
-                   checkJValue();
-                   pixy_x = pixy.ccc.blocks[j].m_x;
-                   Serial.println(pixy_x);
-                 }
-                 x = 1;
-                }else if (pixy_x > 140 && pixy_x <= 170){
-                  while (pixy_x <= 140){
-                   rotateLeft(200);
-                   pixy.ccc.getBlocks();
-                   checkJValue();
-                   pixy_x = pixy.ccc.blocks[j].m_x;
-                   Serial.println(pixy_x);
-                 } while (pixy_x > 140 && pixy_x <= 170){
-                   fwd(200);
-                   pixy.ccc.getBlocks();
-                   checkJValue();
-                   pixy_x = pixy.ccc.blocks[j].m_x;
-                   Serial.println(pixy_x);
-                 } while (pixy_x > 170){
-                   rotateLeft(200);
-                   pixy.ccc.getBlocks();
-                   checkJValue();
-                   pixy_x = pixy.ccc.blocks[j].m_x;
-                   Serial.println(pixy_x);
-                 }
-                 x = 1;
-                } else {
-                  while (pixy_x <= 140){
-                   rotateLeft(200);
-                   pixy.ccc.getBlocks();
-                   checkJValue();
-                   pixy_x = pixy.ccc.blocks[j].m_x;
-                   Serial.println(pixy_x);
-                 } while (pixy_x > 140 && pixy_x <= 170){
-                   fwd(200);
-                   pixy.ccc.getBlocks();
-                   checkJValue();
-                   pixy_x = pixy.ccc.blocks[j].m_x;
-                   Serial.println(pixy_x);
-                 } while (pixy_x > 170){
-                   rotateLeft(200);
-                   pixy.ccc.getBlocks();
-                   checkJValue();
-                   pixy_x = pixy.ccc.blocks[j].m_x;
-                   Serial.println(pixy_x);
-                 }
-                 x = 1;
-              }
-               }
-             } 
-           } 
-           } 
-           
-           //Runs if only one object
-           
-           //else if (pixy.ccc.numBlocks <= 1){
-           if (pixy.ccc.numBlocks > 0){
-           if (pixy_x <= 140){
-                while (pixy_x <= 140){
-                   rotateLeft(200);
-                   pixy.ccc.getBlocks();
-                   checkJValue();
-                   pixy_x = pixy.ccc.blocks[j].m_x;
-                   Serial.println(pixy_x);
-                 } while (pixy_x > 140 && pixy_x <= 170){
-                   fwd(200);
-                   pixy.ccc.getBlocks();
-                   checkJValue();
-                   pixy_x = pixy.ccc.blocks[j].m_x;
-                   Serial.println(pixy_x);
-                 } while (pixy_x > 170){
-                   rotateLeft(200);
-                   pixy.ccc.getBlocks();
-                   checkJValue();
-                   pixy_x = pixy.ccc.blocks[j].m_x;
-                   Serial.println(pixy_x);
-                 }
-                 x = 1;
-                 } while (pixy_x > 140 && pixy_x <= 170){
-                   fwd(200);
-                   pixy.ccc.getBlocks();
-                   checkJValue();
-                   pixy_x = pixy.ccc.blocks[j].m_x;
-                   Serial.println(pixy_x);
-                 }
-                 x = 1;
-                } else if (pixy_x > 140 && pixy_x <= 170){
-                  while (pixy_x <= 140){
-                   rotateLeft(200);
-                   pixy.ccc.getBlocks();
-                   checkJValue();
-                   pixy_x = pixy.ccc.blocks[j].m_x;
-                 } while (pixy_x > 140 && pixy_x <= 170){
-                   fwd(200);
-                   pixy.ccc.getBlocks();
-                   checkJValue();
-                   pixy_x = pixy.ccc.blocks[j].m_x;
-                 } while (pixy_x > 170){
-                   rotateLeft(200);
-                   pixy.ccc.getBlocks();
-                   checkJValue();
-                   pixy_x = pixy.ccc.blocks[j].m_x;
-                 }
-                 x = 1;
-                } else {
-                while (pixy_x <= 140){
-                   rotateLeft(200);
-                   pixy.ccc.getBlocks();
-                   checkJValue();
-                   pixy_x = pixy.ccc.blocks[j].m_x;
-                 } while (pixy_x > 140 && pixy_x <= 170){
-                   fwd(200);
-                   pixy.ccc.getBlocks();
-                   checkJValue();
-                   pixy_x = pixy.ccc.blocks[j].m_x;
-                 } while (pixy_x > 170){
-                   rotateLeft(200);
-                   pixy.ccc.getBlocks();
-                   checkJValue();
-                   pixy_x = pixy.ccc.blocks[j].m_x;
-                 }
-                 x = 1;
-              }
-         }
-    }
+  }   
 }
-void checkJValue(){
-  for (int g=0; g<pixy.ccc.numBlocks; g++)
-    {
-      int min = pixy.ccc.blocks[g].m_x - 10;
-      int max = pixy.ccc.blocks[g].m_x + 10;
-      if (min >= pixy.ccc.blocks[j].m_x && max <= pixy.ccc.blocks[j].m_x){
-        j = g;
-      }
-    }*/
+void pixyBlockCheck(){
+  for (int j = 0; j < pixy.ccc.numBlocks;j++){
+    pixy_x_j = pixy.ccc.blocks[j].m_x;
+    pixy_y_j = pixy.ccc.blocks[j].m_y;
+    pixy_age_j = pixy.ccc.blocks[j].m_age;
+    pixy_width_j = pixy.ccc.blocks[j].m_width;
+    pixy_height_j = pixy.ccc.blocks[j].m_height;
+    if ((((pixy_x_j - 15) >= pixy_x) || ((pixy_x_j + 15) <= pixy_x)) && (((pixy_y_j - 15) >= pixy_y) || ((pixy_y_j + 15) <= pixy_y))){
+    pixy_x = pixy.ccc.blocks[j].m_x;
+    pixy_y = pixy.ccc.blocks[j].m_y;
+    pixy_age = pixy.ccc.blocks[j].m_age;
+    pixy_width = pixy.ccc.blocks[j].m_width;
+    pixy_height = pixy.ccc.blocks[j].m_height;
+    }
+  }
 }
-

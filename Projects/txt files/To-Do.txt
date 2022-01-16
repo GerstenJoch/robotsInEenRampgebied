@@ -6,6 +6,7 @@
 Finishing the pixycam code
 Making the draft report
 Thinking about the presentation
+
 *At School*
 Making a marker for camera detection
 Adding a Distance sensor to the robot and testing it and changing code if it doesn't work

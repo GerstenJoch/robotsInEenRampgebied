@@ -72,7 +72,7 @@
             the same thing. If both sensors are free, it rotates to the right and
             if neither are free, it goes backwards until it finds an opening on the left
             or the right
-    Pixy2cam function:
+    Pixy2cam functions:
         void objectDetection(): 
             Iterates through the detected objects by the camera. To make sure a right object
             is detected it only takes a object which age is at least 30, y pixels are above
@@ -80,7 +80,10 @@
             After taken the right object, it rotates towards the middle depending on the x value
             of the object. If it's roughly in the middle, it drives forward until it's right in front
             of it.
-
+        void pixyBlockCheck():
+            Iterates through a new set of object so we can update the x-value, but the block number    
+            changes when getting new objects so we have this function to set the x-value to the new
+            x-value if the coordinates are rougly the same.
         
 
 
