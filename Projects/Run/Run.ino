@@ -12,8 +12,8 @@ const int trigPinF = 12;    // Trigger
 const int echoPinF = 13;    // Echo
 const int trigPinL = 10;
 const int echoPinL = 11;
-int trigPinR;         //Sensors still have to be connected
-int echoPinR;        
+int trigPinR = 1;         
+int echoPinR = 0;        
 double duration, cmF,cmR,cmL;
 //pixycam
 Pixy2 pixy;
