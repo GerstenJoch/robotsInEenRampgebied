@@ -10,11 +10,12 @@ int speed1;
 //ultrasonic sensor
 const int trigPinF = 12;    // Trigger
 const int echoPinF = 13;    // Echo
-const int trigPinL = 10;
-const int echoPinL = 11;
+const int trigPinL = 11;
+const int echoPinL = 10;
 int trigPinR = 1;         
 int echoPinR = 0;        
-double duration, cmF,cmR,cmL;
+int cmF,cmR,cmL;
+long duration;
 //pixycam
 Pixy2 pixy;
 int pixy_x, pixy_y,pixy_age,pixy_width,pixy_height, pixy_old_x;
@@ -28,7 +29,6 @@ const int stopButtonPin = 7;
 int stopButtonState;
 
 void setup() {                        //Let's all the components initiate
-  Serial.begin(9600);
   pinMode(trigPinF, OUTPUT);
   pinMode(echoPinF, INPUT);
   pinMode(trigPinR, OUTPUT);
@@ -44,10 +44,11 @@ void setup() {                        //Let's all the components initiate
   pinMode(stopButtonPin, INPUT);
   pixy.init();                  //Initiates camera
   digitalWrite(ledPin, LOW);  
+    Serial.begin(9600);  
 }
 
 void loop() {                     //Loops through all the code
-  distanceCheck();
+  distanceSensorLeft();
 }
 
 void justWork(){    //Runs all the necessary code to work. Can be in the loop function, but is created as a joke
@@ -56,8 +57,8 @@ void justWork(){    //Runs all the necessary code to work. Can be in the loop fu
   if (startButtonState == HIGH) {                                      //Robot starts when startbutton is pressed
     Serial.print("Protocol initiated \n");
     digitalWrite(ledPin, HIGH);
-    //fwd(255);
-    distanceCheck();
+    fwd(255);
+    //distanceCheck();
     //objectDetection();
   }
   if (stopButtonState == HIGH) {                                       //Robot stops when stopbutton is pressed
@@ -114,6 +115,7 @@ void fwd(int speed){      //Goes forward infinitely given a speed
   analogWrite(RF_Motor, speed);
   analogWrite(LB_Motor, 0);
   analogWrite(RB_Motor, 0);
+  distanceCheck();
   Serial.println("Driving FORWARD \n");
 }
 
@@ -154,16 +156,21 @@ void distanceSensorRight(){     //Gets distance value from right sensor
   delay(10);
 }
 void distanceSensorLeft(){    //Gets distance value from left sensor
+  // Clears the trigPin condition
   digitalWrite(trigPinL, LOW);
-  delayMicroseconds(5);
+  delayMicroseconds(2);
+  // Sets the trigPin HIGH (ACTIVE) for 10 microseconds
   digitalWrite(trigPinL, HIGH);
   delayMicroseconds(10);
   digitalWrite(trigPinL, LOW);
-  // ^ Gets distance in pulse
-  pinMode(echoPinL, INPUT);
+  // Reads the echoPin, returns the sound wave travel time in microseconds
   duration = pulseIn(echoPinL, HIGH);
-  cmL = (duration/2) / 29.1;   //converts pulse to duration to cm  
-  delay(10);
+  // Calculating the distance
+  cmL = duration * 0.034 / 2; // Speed of sound wave divided by 2 (go and back)
+  // Displays the distance on the Serial Monitor
+  Serial.print("Distance: ");
+  Serial.print(cmL);
+  Serial.println(" cm");
 }
 
 //These 2 functions are used for the logic to let the robot stop when it's nearing a wall and let it find it's way through
@@ -174,7 +181,7 @@ void distanceCheck() {
   if (cmF > 1 && cmF <= 20) {  //If it's greater than 1 and smaller/equal than 20 it stops and checks left & right, else goes forward
   //greater than 1 is called because value can randomly change to 1
   Serial.println("Object encounterd: checking LEFT and RIGHT \n");
-  stop();
+  stopAll();
   distanceLeftRightCheck();
   }
 }
