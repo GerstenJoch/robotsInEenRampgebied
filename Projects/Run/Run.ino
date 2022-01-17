@@ -57,27 +57,13 @@ void justWork(){    //Runs all the necessary code to work. Can be in the loop fu
     Serial.print("Protocol initiated /n");
     digitalWrite(ledPin, HIGH);
     fwd(255);
-    /* while (true){  
-    objectDetection();
     distanceCheck();
-   
-    stopButtonState = digitalRead(stopButtonPin);
-    if (stopButtonState == HIGH){
-      return false;
-    }
-    } */
+    //objectDetection();
   }
   if (stopButtonState == HIGH) {                                       //Robot stops when stopbutton is pressed
     Serial.print("Protocol stopped /n");
     digitalWrite(ledPin, LOW);
     stopAll();
-    /*while (true){        
-    startButtonState = digitalRead(startButton);
-     if (startButtonState == HIGH){
-      return false;
-    }
-    }
-    }*/
   }
 }
 //Driving functions these can be call in the logic and alorithms to be more efficient when coding
@@ -150,6 +136,7 @@ void distanceSensorFront(){       //Gets distance value from front sensor
   pinMode(echoPinF, INPUT);
   duration = pulseIn(echoPinF, HIGH);
   cmF = (duration/2) / 29.1; //converts pulse to duration to cm
+  Serial.println("CM: " + cmF);
   delay(10);
 }
 
