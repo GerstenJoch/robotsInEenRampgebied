@@ -8,14 +8,15 @@ const int LB_Motor = 9;
 const int LF_Motor = 5; 
 int speed1;
 //ultrasonic sensor
-const int trigPinF = 12;    // Trigger
-const int echoPinF = 13;    // Echo
-const int trigPinL = 11;
-const int echoPinL = 10;
-int trigPinR = 1;         
-int echoPinR = 0;        
+#define trigPinF 12    // Trigger
+#define echoPinF 13    // Echo
+const int trigPinL;
+const int echoPinL;        
 int cmF,cmR,cmL;
-long duration;
+#define echoPinR 11 
+#define trigPinR 10 
+long duration; 
+int distance;
 //pixycam
 Pixy2 pixy;
 int pixy_x, pixy_y,pixy_age,pixy_width,pixy_height, pixy_old_x;
@@ -29,10 +30,6 @@ const int stopButtonPin = 7;
 int stopButtonState;
 
 void setup() {                        //Let's all the components initiate
-  pinMode(trigPinF, OUTPUT);
-  pinMode(echoPinF, INPUT);
-  pinMode(trigPinR, OUTPUT);
-  pinMode(echoPinR, INPUT);
   pinMode(trigPinL, OUTPUT);
   pinMode(echoPinL, INPUT);
   pinMode(RF_Motor, OUTPUT);
@@ -44,11 +41,15 @@ void setup() {                        //Let's all the components initiate
   pinMode(stopButtonPin, INPUT);
   pixy.init();                  //Initiates camera
   digitalWrite(ledPin, LOW);  
-    Serial.begin(9600);  
+  Serial.begin(9600);  
+  pinMode(trigPinR, OUTPUT); // Sets the trigPin as an OUTPUT
+  pinMode(echoPinR, INPUT); // Sets the echoPin as an INPUT
+  pinMode(trigPinF, OUTPUT);
+  pinMode(echoPinF, INPUT);
 }
 
 void loop() {                     //Loops through all the code
-  distanceSensorLeft();
+  distanceSensorRight();
 }
 
 void justWork(){    //Runs all the necessary code to work. Can be in the loop function, but is created as a joke
@@ -101,12 +102,12 @@ void stopAll(){             //Sets everything to 0 power
   analogWrite(RB_Motor, 0);
   analogWrite(LF_Motor, 0);
   analogWrite(RF_Motor, 0);
-  analogWrite(trigPinF, LOW);
-  analogWrite(echoPinF, LOW);
-  analogWrite(trigPinL, LOW);
-  analogWrite(echoPinL, LOW);
-  analogWrite(trigPinR, LOW);
-  analogWrite(echoPinR, LOW);
+  //analogWrite(trigPinF, LOW);
+  //analogWrite(echoPinF, LOW);
+  //analogWrite(trigPinL, LOW);
+  //analogWrite(echoPinL, LOW);
+  //analogWrite(trigPinR, LOW);
+  //analogWrite(echoPinR, LOW);
   Serial.println("Stopped all \n");
 }
 
@@ -115,8 +116,8 @@ void fwd(int speed){      //Goes forward infinitely given a speed
   analogWrite(RF_Motor, speed);
   analogWrite(LB_Motor, 0);
   analogWrite(RB_Motor, 0);
-  distanceCheck();
-  Serial.println("Driving FORWARD \n");
+  //distanceCheck();
+  Serial.println("Driving FORWARD ");
 }
 
 void bwd(int speed1){    //Goes backwards infinitely given a speed
@@ -129,32 +130,41 @@ void bwd(int speed1){    //Goes backwards infinitely given a speed
 
 //Functions for the ultrasonic distance sensor to call them later. This makes coding easier
 void distanceSensorFront(){       //Gets distance value from front sensor
+    // Clears the trigPin condition
   digitalWrite(trigPinF, LOW);
-  delayMicroseconds(5);
+  delayMicroseconds(2);
+  // Sets the trigPin HIGH (ACTIVE) for 10 microseconds
   digitalWrite(trigPinF, HIGH);
   delayMicroseconds(10);
   digitalWrite(trigPinF, LOW);
-  // ^ Gets distance in pulse
-  pinMode(echoPinF, INPUT);
+  // Reads the echoPin, returns the sound wave travel time in microseconds
   duration = pulseIn(echoPinF, HIGH);
-  cmF = (duration/2) / 29.1; //converts pulse to duration to cm
-  Serial.print("CM: ");
-  Serial.println(cmF);
-  delay(10);
+  // Calculating the distance
+  cmF = duration * 0.034 / 2; // Speed of sound wave divided by 2 (go and back)
+  // Displays the distance on the Serial Monitor
+  Serial.print("Distance Front: ");
+  Serial.print(cmF);
+  Serial.println(" cm");
 }
 
 void distanceSensorRight(){     //Gets distance value from right sensor
+    // Clears the trigPin condition
   digitalWrite(trigPinR, LOW);
-  delayMicroseconds(5);
+  delayMicroseconds(2);
+  // Sets the trigPin HIGH (ACTIVE) for 10 microseconds
   digitalWrite(trigPinR, HIGH);
   delayMicroseconds(10);
   digitalWrite(trigPinR, LOW);
-  // ^ Gets distance in pulse
-  pinMode(echoPinR, INPUT);
+  // Reads the echoPin, returns the sound wave travel time in microseconds
   duration = pulseIn(echoPinR, HIGH);
-  cmR = (duration/2) / 29.1;     //converts pulse to duration to cm
-  delay(10);
+  // Calculating the distance
+  distance = duration * 0.034 / 2; // Speed of sound wave divided by 2 (go and back)
+  // Displays the distance on the Serial Monitor
+  Serial.print("Distance Right: ");
+  Serial.print(distance);
+  Serial.println(" cm");
 }
+
 void distanceSensorLeft(){    //Gets distance value from left sensor
   // Clears the trigPin condition
   digitalWrite(trigPinL, LOW);
@@ -166,10 +176,10 @@ void distanceSensorLeft(){    //Gets distance value from left sensor
   // Reads the echoPin, returns the sound wave travel time in microseconds
   duration = pulseIn(echoPinL, HIGH);
   // Calculating the distance
-  cmL = duration * 0.034 / 2; // Speed of sound wave divided by 2 (go and back)
+  cmF = duration * 0.034 / 2; // Speed of sound wave divided by 2 (go and back)
   // Displays the distance on the Serial Monitor
   Serial.print("Distance: ");
-  Serial.print(cmL);
+  Serial.print(cmF);
   Serial.println(" cm");
 }
 
