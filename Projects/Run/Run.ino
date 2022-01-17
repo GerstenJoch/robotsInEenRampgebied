@@ -47,7 +47,7 @@ void setup() {                        //Let's all the components initiate
 }
 
 void loop() {                     //Loops through all the code
-  justWork();
+  distanceCheck();
 }
 
 void justWork(){    //Runs all the necessary code to work. Can be in the loop function, but is created as a joke
@@ -56,7 +56,7 @@ void justWork(){    //Runs all the necessary code to work. Can be in the loop fu
   if (startButtonState == HIGH) {                                      //Robot starts when startbutton is pressed
     Serial.print("Protocol initiated \n");
     digitalWrite(ledPin, HIGH);
-    fwd(255);
+    //fwd(255);
     distanceCheck();
     //objectDetection();
   }
@@ -136,7 +136,8 @@ void distanceSensorFront(){       //Gets distance value from front sensor
   pinMode(echoPinF, INPUT);
   duration = pulseIn(echoPinF, HIGH);
   cmF = (duration/2) / 29.1; //converts pulse to duration to cm
-  Serial.println("CM: " + cmF);
+  Serial.print("CM: ");
+  Serial.println(cmF);
   delay(10);
 }
 
@@ -169,10 +170,8 @@ void distanceSensorLeft(){    //Gets distance value from left sensor
 
 void distanceCheck() {
   distanceSensorFront();
-  if(cmF <= 1 || cmF > 20){
-    Serial.print("No objects detected on sensor, moving forward \n");
-  fwd(255);
-  }if (cmF > 1 && cmF <= 20) {  //If it's greater than 1 and smaller/equal than 20 it stops and checks left & right, else goes forward
+  Serial.println("Help");
+  if (cmF > 1 && cmF <= 20) {  //If it's greater than 1 and smaller/equal than 20 it stops and checks left & right, else goes forward
   //greater than 1 is called because value can randomly change to 1
   Serial.println("Object encounterd: checking LEFT and RIGHT \n");
   stop();
