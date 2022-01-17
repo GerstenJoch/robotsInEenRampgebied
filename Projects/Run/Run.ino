@@ -54,14 +54,14 @@ void justWork(){    //Runs all the necessary code to work. Can be in the loop fu
   startButtonState = digitalRead(startButton);                         //Checks the state of the start and stop buttons
   stopButtonState = digitalRead(stopButtonPin);
   if (startButtonState == HIGH) {                                      //Robot starts when startbutton is pressed
-    Serial.print("Protocol initiated /n");
+    Serial.print("Protocol initiated \n");
     digitalWrite(ledPin, HIGH);
     fwd(255);
     distanceCheck();
     //objectDetection();
   }
   if (stopButtonState == HIGH) {                                       //Robot stops when stopbutton is pressed
-    Serial.print("Protocol stopped /n");
+    Serial.print("Protocol stopped \n");
     digitalWrite(ledPin, LOW);
     stopAll();
   }
@@ -72,7 +72,7 @@ void rotateRight(int speed, int time){       //Rotates robot to the RIGHT given 
   analogWrite(RB_Motor, speed);
   analogWrite(RF_Motor, 0);
   analogWrite(LB_Motor, 0);
-  Serial.println("Rotating RIGHT /n");
+  Serial.println("Rotating RIGHT \n");
   delay(time); //Rotates for a give time in millisecond and the stops
   stop();
 }
@@ -82,7 +82,7 @@ void rotateLeft(int speed, int time){       //Rotates robot to the LEFT given a 
   analogWrite(RB_Motor, 0);
   analogWrite(RF_Motor, speed);
   analogWrite(LB_Motor, speed);
-  Serial.println("Rotating LEFT /n");
+  Serial.println("Rotating LEFT \n");
   delay(time); //Rotates for a give time in millisecond and the stops
   stop();
 }
@@ -92,7 +92,7 @@ void stop() {                //Sets all the driving motors to 0 power
   analogWrite(RB_Motor, 0);
   analogWrite(LF_Motor, 0);
   analogWrite(RF_Motor, 0);
-  Serial.println("Stopped /n");
+  Serial.println("Stopped \n");
 }
 
 void stopAll(){             //Sets everything to 0 power
@@ -106,7 +106,7 @@ void stopAll(){             //Sets everything to 0 power
   analogWrite(echoPinL, LOW);
   analogWrite(trigPinR, LOW);
   analogWrite(echoPinR, LOW);
-  Serial.println("Stopped all /n");
+  Serial.println("Stopped all \n");
 }
 
 void fwd(int speed){      //Goes forward infinitely given a speed
@@ -114,7 +114,7 @@ void fwd(int speed){      //Goes forward infinitely given a speed
   analogWrite(RF_Motor, speed);
   analogWrite(LB_Motor, 0);
   analogWrite(RB_Motor, 0);
-  Serial.println("Driving FORWARD /n");
+  Serial.println("Driving FORWARD \n");
 }
 
 void bwd(int speed1){    //Goes backwards infinitely given a speed
@@ -122,7 +122,7 @@ void bwd(int speed1){    //Goes backwards infinitely given a speed
   analogWrite(RF_Motor, 0);
   analogWrite(LB_Motor, speed1);
   analogWrite(RB_Motor, speed1);
-  Serial.println("Driving BACKWARDS /n");
+  Serial.println("Driving BACKWARDS \n");
 }
 
 //Functions for the ultrasonic distance sensor to call them later. This makes coding easier
@@ -170,11 +170,11 @@ void distanceSensorLeft(){    //Gets distance value from left sensor
 void distanceCheck() {
   distanceSensorFront();
   if(cmF <= 1 || cmF > 20){
-    Serial.print("No objects detected on sensor, moving forward /n");
+    Serial.print("No objects detected on sensor, moving forward \n");
   fwd(255);
   }if (cmF > 1 && cmF <= 20) {  //If it's greater than 1 and smaller/equal than 20 it stops and checks left & right, else goes forward
   //greater than 1 is called because value can randomly change to 1
-  Serial.println("Object encounterd: checking LEFT and RIGHT /n");
+  Serial.println("Object encounterd: checking LEFT and RIGHT \n");
   stop();
   distanceLeftRightCheck();
   }
@@ -182,18 +182,18 @@ void distanceCheck() {
 void distanceLeftRightCheck(){
   distanceSensorRight();
   if (cmR > 20){   
-    Serial.print("Check complete on RIGHT sensor, turning right /n");         //Checks right sensor if open, rotates right, else, checks left sensor
+    Serial.print("Check complete on RIGHT sensor, turning right \n");         //Checks right sensor if open, rotates right, else, checks left sensor
     rotateRight(255, 500);
     return;
   } else if (cmR <= 20) { 
-    Serial.println("Check complete on RIGHT sensor, right side is not open to rotate");                           
+    Serial.println("Check complete on RIGHT sensor, right side is not open to rotate \n");                           
     distanceSensorLeft();
     if (cmL > 20){    
-      Serial.print("Check complete on LEFT sensor, turning right /n");        //Checks left sensor if open, rotates left, else, goes backwards
+      Serial.print("Check complete on LEFT sensor, turning right \n");        //Checks left sensor if open, rotates left, else, goes backwards
       rotateLeft(255, 500);
       return;
     } else if (cmL <= 20) {
-        Serial.print("Not enough space on left and right, moving in reverse /n");
+        Serial.print("Not enough space on left and right, moving in reverse \n");
         while (cmL <= 20 && cmR <= 20){        //Drives backwards until left or right is open
           bwd(255);
           distanceSensorLeft();
@@ -201,12 +201,12 @@ void distanceLeftRightCheck(){
           if (cmL > 20){
             stop();
             rotateLeft(255, 500);
-            Serial.print("Found enough space on left side, stopping on return and rotating left. /n");
+            Serial.print("Found enough space on left side, stopping on return and rotating left. \n");
             break;
           } if (cmR >20){
             stop();
             rotateLeft(255, 500);
-            Serial.print("Found enough space on right side, stopping on return and rotating right. /n");
+            Serial.print("Found enough space on right side, stopping on return and rotating right. \n");
             break;
         }
      }
