@@ -119,8 +119,9 @@ void stopAll(){             //Sets everything to 0 power
 }
 
 void fwd(int speed){      //Goes forward infinitely given a speed
-  analogWrite(LF_Motor, speed); //Has less power to correct the robot to go in a straight line
-  analogWrite(RF_Motor, speed);
+  //Serial.println(speed);
+  analogWrite(LF_Motor, 255); //Has less power to correct the robot to go in a straight line
+  analogWrite(RF_Motor, 180);
   analogWrite(LB_Motor, 0);
   analogWrite(RB_Motor, 0);
   //distanceCheck();
@@ -194,11 +195,11 @@ void distanceSensorLeft(){    //Gets distance value from left sensor
 
 void distanceCheck() {
   distanceSensorRight();
-  if (distance > 1 && distance <= 20) {  //If it's greater than 1 and smaller/equal than 20 it stops and checks left & right, else goes forward
+  if (distance > 1 && distance <= 35) {  //If it's greater than 1 and smaller/equal than 20 it stops and checks left & right, else goes forward
   //greater than 1 is called because value can randomly change to 1
   Serial.println("Object encounterd: checking LEFT and RIGHT \n");
   stop();
-  rotateRight(255,500);
+  rotateRight(255,700);
   //distanceLeftRightCheck();
   }
 }
