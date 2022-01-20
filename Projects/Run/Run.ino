@@ -48,7 +48,7 @@ void setup() {                        //Let's all the components initiate
 }
 
 void loop() {                     //Loops through all the code
-  distanceCheck();
+  justWork();
 }
 
 void justWork(){    //Runs all the necessary code to work. Can be in the loop function, but is created as a joke
