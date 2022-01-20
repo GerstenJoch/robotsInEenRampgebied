@@ -35,21 +35,20 @@ void setup() {                        //Let's all the components initiate
   pinMode(RF_Motor, OUTPUT);
   pinMode(LF_Motor, OUTPUT);
   pinMode(RB_Motor, OUTPUT);
-  pinMode(LB_Motor, OUTPUT);
+  //pinMode(trigPinF, OUTPUT);
+  //pinMode(echoPinF, INPUT);
   pinMode(startButton, INPUT);
   pinMode(ledPin, OUTPUT);
   pinMode(stopButtonPin, INPUT);                  //Initiates camera
   digitalWrite(ledPin, LOW);  
-  Serial.begin(115200);  
+  Serial.begin(9600);  
+  pixy.init();
   pinMode(trigPinR, OUTPUT); // Sets the trigPin as an OUTPUT
   pinMode(echoPinR, INPUT); // Sets the echoPin as an INPUT
-  pinMode(trigPinF, OUTPUT);
-  pinMode(echoPinF, INPUT);
-  pixy.init();
 }
 
 void loop() {                     //Loops through all the code
-  objectDetection();
+  distanceCheck();
 }
 
 void justWork(){    //Runs all the necessary code to work. Can be in the loop function, but is created as a joke
