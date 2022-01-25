@@ -303,7 +303,6 @@ void objectDetection(){
                 Serial.println("Moving Forward");
                 Serial.print("X = ");
                 Serial.println(pixy_x);
-                //fwd(255);
                 pixy.ccc.getBlocks();
                 pixyBlockCheck();
                 distanceSensorFront();
