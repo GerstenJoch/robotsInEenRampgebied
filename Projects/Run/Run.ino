@@ -8,15 +8,14 @@ const int LB_Motor = 9;
 const int LF_Motor = 5; 
 int speed1;
 //ultrasonic sensor
-#define trigPinF 12    // Trigger
-#define echoPinF 13    // Echo
+#define trigPinF 11    // Trigger
+#define echoPinF 10    // Echo
 #define trigPinL 0
-#define echoPinL 1        
-int cmF,cmR,cmL;
-#define echoPinR 11 
-#define trigPinR 10 
+#define echoPinL 1   
+#define echoPinR 12 
+#define trigPinR 13 
 long duration; 
-int distance;
+int distance, distanceL, distanceR;
 //pixycam
 Pixy2 pixy;
 int pixy_x, pixy_y,pixy_age,pixy_width,pixy_height, pixy_old_x;
@@ -58,14 +57,14 @@ void justWork(){    //Runs all the necessary code to work. Can be in the loop fu
   if (startButtonState == HIGH) {                                      //Robot starts when startbutton is pressed
     Serial.print("Protocol initiated \n");
     delay(200);
-    while (true){
+    while (true){                                                     //Loops through all the code for the robot to drive and function
     digitalWrite(ledPin, HIGH);
     fwd(255);
     //distanceCheck();
     objectDetection();
     x = 0;
     startButtonState = digitalRead(startButton); 
-    if (startButtonState == HIGH){
+    if (startButtonState == HIGH){                                  //Robot stops when button is pressed again
       Serial.println("Return false");
       delay(200);
       break;
@@ -108,22 +107,20 @@ void stopAll(){             //Sets everything to 0 power
   analogWrite(RB_Motor, 0);
   analogWrite(LF_Motor, 0);
   analogWrite(RF_Motor, 0);
-  //analogWrite(trigPinF, LOW);
-  //analogWrite(echoPinF, LOW);
-  //analogWrite(trigPinL, LOW);
-  //analogWrite(echoPinL, LOW);
-  //analogWrite(trigPinR, LOW);
-  //analogWrite(echoPinR, LOW);
+  analogWrite(trigPinF, LOW);
+  analogWrite(echoPinF, LOW);
+  analogWrite(trigPinL, LOW);
+  analogWrite(echoPinL, LOW);
+  analogWrite(trigPinR, LOW);
+  analogWrite(echoPinR, LOW);
   Serial.println("Stopped all \n");
 }
 
 void fwd(int speed){      //Goes forward infinitely given a speed
-  //Serial.println(speed);
   analogWrite(LF_Motor, speed); //Has less power to correct the robot to go in a straight line
   analogWrite(RF_Motor, speed);
   analogWrite(LB_Motor, 0);
   analogWrite(RB_Motor, 0);
-  //distanceCheck();
   Serial.println("Driving FORWARD ");
 }
 
@@ -137,71 +134,60 @@ void bwd(int speed1){    //Goes backwards infinitely given a speed
 
 //Functions for the ultrasonic distance sensor to call them later. This makes coding easier
 void distanceSensorFront(){       //Gets distance value from front sensor
-    // Clears the trigPin condition
   digitalWrite(trigPinF, LOW);
   delayMicroseconds(2);
-  // Sets the trigPin HIGH (ACTIVE) for 10 microseconds
   digitalWrite(trigPinF, HIGH);
   delayMicroseconds(10);
   digitalWrite(trigPinF, LOW);
-  // Reads the echoPin, returns the sound wave travel time in microseconds
   duration = pulseIn(echoPinF, HIGH);
-  // Calculating the distance
-  cmF = duration * 0.034 / 2; // Speed of sound wave divided by 2 (go and back)
-  // Displays the distance on the Serial Monitor
-  Serial.print("Distance Front: ");
-  Serial.print(cmF);
-  Serial.println(" cm");
-}
-
-void distanceSensorRight(){     //Gets distance value from right sensor 
-    // Clears the trigPin condition
-  digitalWrite(trigPinR, LOW);
-  delayMicroseconds(2);
-  // Sets the trigPin HIGH (ACTIVE) for 10 microseconds
-  digitalWrite(trigPinR, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(trigPinR, LOW);
-  // Reads the echoPin, returns the sound wave travel time in microseconds
-  duration = pulseIn(echoPinR, HIGH);
-  // Calculating the distance
   distance = duration * 0.034 / 2; // Speed of sound wave divided by 2 (go and back)
   // Displays the distance on the Serial Monitor
-  Serial.print("Distance Right: ");
+  Serial.print("Distance Front: ");
   Serial.print(distance);
   Serial.println(" cm");
 }
 
+void distanceSensorRight(){     //Gets distance value from right sensor 
+  digitalWrite(trigPinR, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPinR, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPinR, LOW);
+  duration = pulseIn(echoPinR, HIGH);
+  distanceR = duration * 0.034 / 2; // Speed of sound wave divided by 2 (go and back)
+  // Displays the distance on the Serial Monitor
+  Serial.print("Distance Right: ");
+  Serial.print(distanceR);
+  Serial.println(" cm");
+}
+
 void distanceSensorLeft(){    //Gets distance value from left sensor
-  // Clears the trigPin condition
   digitalWrite(trigPinL, LOW);
   delayMicroseconds(2);
-  // Sets the trigPin HIGH (ACTIVE) for 10 microseconds
   digitalWrite(trigPinL, HIGH);
   delayMicroseconds(10);
   digitalWrite(trigPinL, LOW);
-  // Reads the echoPin, returns the sound wave travel time in microseconds
   duration = pulseIn(echoPinL, HIGH);
   // Calculating the distance
-  cmF = duration * 0.034 / 2; // Speed of sound wave divided by 2 (go and back)
+  distanceL = duration * 0.034 / 2; // Speed of sound wave divided by 2 (go and back)
   // Displays the distance on the Serial Monitor
-  Serial.print("Distance: ");
-  Serial.print(cmF);
+  Serial.print("Distance Right: ");
+  Serial.print(distanceL);
   Serial.println(" cm");
 }
 
 //These 2 functions are used for the logic to let the robot stop when it's nearing a wall and let it find it's way through
 
 void distanceCheck() {
-  distanceSensorRight();
+  distanceSensorFront();
   if (distance > 1 && distance <= 35) {  //If it's greater than 1 and smaller/equal than 20 it stops and checks left & right, else goes forward
   //greater than 1 is called because value can randomly change to 1
   Serial.println("Object encounterd: checking LEFT and RIGHT \n");
   stop();
-  rotateRight(255);
+  rotateRight(255);               //Rotates 90 degrees
   delay(600);
   stop();
-  //distanceLeftRightCheck();
+  //distanceLeftRightCheck();     Should be called, but the prototype can't handle 3 distance sensors
   }
 }
 void distanceLeftRightCheck(){
@@ -240,8 +226,6 @@ void distanceLeftRightCheck(){
 }
 //Function for the pixy cam. The camera detection. It look if the detected object is left or right. Depending on that, 
 //it rotates and drives the robot until it's right in front of it
-//It goes to a filtering system to make sure when more that 1 object is detected,
-//It detects the right one.
 void objectDetection(){ 
   int i;
   pixy.ccc.getBlocks();
@@ -258,15 +242,13 @@ void objectDetection(){
       pixy_width = pixy.ccc.blocks[i].m_width;
       pixy_height = pixy.ccc.blocks[i].m_height;
       // ^ Gets x,y,age,width,height values from current object
-      if (pixy_age > 30){
-        Serial.println("Age 30+");
+      if (pixy_age > 30){           
+        Serial.println("Age 30+");        //Checks if it's long enough in frame to not be a random object and checks if the y, width and heigt
         pixy.ccc.blocks[i].print();
         if (!(pixy_y <=50 || pixy_y >= 200)){
-          Serial.println("Good enough y");
-          if ((!(pixy_width <= 10 || pixy_width >= 200)) || (!(pixy_height <= 10 || pixy_height >= 200))){
-            //Checks if it's long enough in frame to not be a random object and checks if the y, width and heigt
+          Serial.println("Good enough y");        //Checks if the y levels are not unreasonable high
+          if ((!(pixy_width <= 10 || pixy_width >= 200)) || (!(pixy_height <= 10 || pixy_height >= 200))){ //Checks if the width and height are not unreasonable high
             Serial.println("Good enough width, height");
-            //are reasonable to get the important block only
             pixy_old_x = pixy_x;  //Backs original value up to not change the if statements to false if true visa versa
             if (pixy_old_x <= 140 || x == 0){
               while (pixy_x <= 120 && x == 0){
@@ -282,14 +264,12 @@ void objectDetection(){
                   x =2;
                   break;
                 }
-                //pixyBlockCheck();
-              } // Rotates left and updates values and makes sure to get the correct object
+              } // Rotates left and updates valuest
               while (pixy_x > 120 && pixy_x <= 180 && x == 0){
-                Serial.println("Flickering middle of screen yes");
-                stop();
-                delay(200);
-                digitalWrite(ledPin, LOW);
-                delay(400);
+                stop();                                        //Stops when object is in the middle, then it flickers the
+                delay(200);                                    //LED 3 times to let you know and rotates 90 degrees so 
+                digitalWrite(ledPin, LOW);                     //the object can't be seen by the camera and then goes
+                delay(400);                                    //back to it's original routine
                 digitalWrite(ledPin, HIGH);
                 delay(400);
                 digitalWrite(ledPin, LOW);
@@ -317,8 +297,7 @@ void objectDetection(){
                   x =2;
                   break;
                 }
-                //pixyBlockCheck();
-              }// Rotates right and updates values and makes sure to get the correct object
+              }// Rotates right and updates values
               }
               if (pixy_old_x > 120 && pixy_old_x <= 180 || x == 0){
               while (pixy_x <= 120 && x == 0){
@@ -334,15 +313,13 @@ void objectDetection(){
                   x =2;
                   break;
                 }
-                //pixyBlockCheck();
-              }// Rotates left and updates values and makes sure to get the correct object 
+              }// Rotates left and updates values and stop when it's right in front of it
               while (pixy_x > 120 && pixy_x <= 180 && x == 0){
-                Serial.println("Flickering middle of screen yes");
-                stop();
-                delay(200);
-                digitalWrite(ledPin, LOW);
-                delay(400);
-                digitalWrite(ledPin, HIGH);
+                stop();                                       //Stops when object is in the middle, then it flickers the                            
+                delay(200);                                   //LED 3 times to let you know and rotates 90 degrees so 
+                digitalWrite(ledPin, LOW);                    //the object can't be seen by the camera and then goes                
+                delay(400);                                   //back to it's original routine
+                digitalWrite(ledPin, HIGH);         
                 delay(400);
                 digitalWrite(ledPin, LOW);
                 delay(400);
@@ -356,7 +333,7 @@ void objectDetection(){
                 delay(600);
                 x = 2;
                 break;
-                }// Drives forward and updates values and makes sure to get the correct object and stops if it's right in front of it
+                }// Drives forward and updates values 
               } while (pixy_x > 180 && x == 0){
                 Serial.println("Rotating Right M");
                 Serial.print("X = ");
@@ -364,7 +341,6 @@ void objectDetection(){
                 
                 rotateRight(180);
                 pixy.ccc.getBlocks();
-                //pixyBlockCheck();
                 pixy_x = pixy.ccc.blocks[i].m_x;
                 if (!pixy.ccc.numBlocks){
                   pixy.ccc.blocks[i].print();
@@ -372,7 +348,7 @@ void objectDetection(){
                   x =2;
                   break;
                 }
-              }// Rotates right and updates values and makes sure to get the correct object
+              }// Rotates right and updates values
               }
 
               if (pixy_old_x > 180 || x == 0){
@@ -389,15 +365,13 @@ void objectDetection(){
                   x =2;
                   break;
                 }
-                //pixyBlockCheck();
-              }// Rotates left and updates values and makes sure to get the correct object 
+              }// Rotates left and updates values
               while (pixy_x > 120 && pixy_x <= 180 && x == 0){
-                Serial.println("Flickering middle of screen yes");
-                stop();
-                delay(200);
-                digitalWrite(ledPin, LOW);
-                delay(400);
-                digitalWrite(ledPin, HIGH);
+                stop();                                            
+                delay(200);                               //Stops when object is in the middle, then it flickers the
+                digitalWrite(ledPin, LOW);                //LED 3 times to let you know and rotates 90 degrees so 
+                delay(400);                               //the object can't be seen by the camera and then goes
+                digitalWrite(ledPin, HIGH);               //back to it's original routine   
                 delay(400);
                 digitalWrite(ledPin, LOW);
                 delay(400);
@@ -411,7 +385,7 @@ void objectDetection(){
                 delay(600);
                 x = 2;
                 break;
-                }// Drives forward and updates values and makes sure to get the correct object and stops if it's right in front of it
+                }// Drives forward and updates values and stops if it's right in front of it
               } while (pixy_x > 180 && x == 0){
                 rotateRight(180);
                 Serial.println("Rotating Right R");
@@ -425,29 +399,11 @@ void objectDetection(){
                   x =2;
                   break;
                 }
-                //pixyBlockCheck();
-              }// Rotates right and updates values and makes sure to get the correct object
+              }// Rotates right and updates values
               }
-              //All while loops in an if statements eventually loops through "while (pixy_x > 140 && pixy_x <= 170)"
+              //All while loops in an if statements eventually loop through "while (pixy_x > 120 && pixy_x <= 180)"
               //To let is go forward and stops when it's right in front of it
           }
         }
-  }
-}
-void pixyBlockCheck(){    //Makes sure to update the right x-value, because the block number changes when updated so 
-  //you can't use the same block index i, because that will change to another object's value
-  for (int j = 0; j < pixy.ccc.numBlocks;j++){
-    pixy_x_j = pixy.ccc.blocks[j].m_x;                   //Iterates through all values again
-    pixy_y_j = pixy.ccc.blocks[j].m_y;
-    pixy_age_j = pixy.ccc.blocks[j].m_age;
-    pixy_width_j = pixy.ccc.blocks[j].m_width;
-    pixy_height_j = pixy.ccc.blocks[j].m_height;
-      if ((((pixy_x_j - 15) >= pixy_x) || ((pixy_x_j + 15) <= pixy_x)) && (((pixy_y_j - 15) >= pixy_y) || ((pixy_y_j + 15) <= pixy_y))){
-        pixy_x = pixy.ccc.blocks[j].m_x;                   //If the block's values are roughly the same, the values will update
-        pixy_y = pixy.ccc.blocks[j].m_y;                   //to the corresponding data
-        pixy_age = pixy.ccc.blocks[j].m_age;
-        pixy_width = pixy.ccc.blocks[j].m_width;
-        pixy_height = pixy.ccc.blocks[j].m_height;
-      }
   }
 }

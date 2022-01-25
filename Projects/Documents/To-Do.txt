@@ -2,12 +2,15 @@
             To-DO
 ----------------------------
 
-*At Office*
-Finishing the pixycam code
-Making the draft report
-Thinking about the presentation
+Sander
+    Rolverdeling
+    Documentatie schrijven
+    (Later) Ontwerprapport
+Guido
+Alex
+    3D Model
 
-*At School*
-Making a marker for camera detection
-Adding a Distance sensor to the robot and testing it and changing code if it doesn't work
-Making the parkour
+Gezamelijk
+    Foto's/project implementeren PwP
+    Presentatie afmaken
+
