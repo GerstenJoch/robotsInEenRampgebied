@@ -1,3 +1,14 @@
+//*************************************************************************//
+//                                                                         //
+//                        ROBOTS IN EEN RAMPGEBIED                         //
+//                                                                         //
+//                              Code Written By:                           //
+//                                                                         //
+//                            - Alexander Mosselaar                        //
+//                            - Guido Ruijs                                //
+//                            - Sander Reinders                            //
+//                                                                         //
+//*************************************************************************//
 #include <Pixy2.h>
 #include <SPI.h>
 
@@ -40,11 +51,11 @@ void setup() {                        //Let's all the components initiate
   pinMode(startButton, INPUT);
   pinMode(ledPin, OUTPUT);
   pinMode(stopButtonPin, INPUT);                  //Initiates camera
-  digitalWrite(ledPin, LOW);    
+  digitalWrite(ledPin, LOW);  
+  Serial.begin(115200);  
+  pixy.init();
   pinMode(trigPinR, OUTPUT); // Sets the trigPin as an OUTPUT
   pinMode(echoPinR, INPUT); // Sets the echoPin as an INPUT
-  Serial.begin(115200);
-  pixy.init();
 }
 
 void loop() {                     //Loops through all the code
