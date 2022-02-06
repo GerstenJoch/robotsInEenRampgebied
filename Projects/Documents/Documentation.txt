@@ -13,18 +13,18 @@
     Ultrasonic Sensors: 
         Forward:
             VCC: 5V
-            Trig (INPUT): pin 12
-            Echo: (OUTPUT): pin 13
+            Trig (INPUT): pin 11
+            Echo: (OUTPUT): pin 10
             GND: GND
         Left:
             VCC: 5V
-            Trig (INPUT): pin 10
-            Echo: (OUTPUT): pin 11
+            Trig (INPUT): pin 0
+            Echo: (OUTPUT): pin 1
             GND: GND
         Right:
             VCC: 5V
-            Trig (INPUT): pin >
-            Echo: (OUTPUT): pin ?
+            Trig (INPUT): pin 13
+            Echo: (OUTPUT): pin 12
             GND: GND
 
     Motors: 
@@ -32,9 +32,9 @@
             RF_Motor: pin 4
             LB_Motor: pin 9
             LF_Motor: pin 5
-    Buttons:
-            startButton: pin 2
-            stopButton: pin 7
+    Extra's:
+            button: pin 2
+            ledPin: pin 6
 * Functions; *
     Integrated functions:
         void setup(): 
@@ -43,7 +43,7 @@
             Loops all the code. 
     General function:
 	void justWork():
-	    Runs the program. Used when debugging and kept as a joke
+	    Runs the program. Used for debugging and kept as a joke
     Driving functions:
         void rotateRight():
             Rotates to the right given a speed
@@ -52,7 +52,7 @@
         void stop():
             Stops the driving motors only
         void stopAll(): 
-            Puts everything on low (stops but still on)
+            Puts every component on low (stops but still on)
         void fwd():
             Drives the robot forward given a speed
         void bwd():
@@ -66,24 +66,25 @@
             Checks the distance to the nearest object from the right
         void distanceCheck():
             Checks the front sensor. If the distance to the nearest object
-            is less than 20cm, it stops and checks the left and right sensor
-            to find a way to navigate, however, the distanceLeftRightCheck is not active, 
-            because the arduino can't handle 3 sensors
+            is less than 35cm, it stops and checks the left and right distance sensor
+            to find a way to rotate, but because only the front sensor is active in 
+            the robot, it will always rotate to the right. (Moreover in the function
+            distanceLeftRightCheck)
         void distanceLeftRightCheck():
-            First checks the right sensor. If there is enough space between,
-            it rotates the the right else it checks the left sensor and checks
+            First checks the right sensor. If there is enough space to rotate,
+            it rotates to the right, else it checks the left sensor and checks
             the same thing. If both sensors are free, it rotates to the right and
             if neither are free, it goes backwards until it finds an opening on the left
-            or the right, however, the distanceLeftRightCheck is not active, 
-            because the arduino can't handle 3 sensors
+            or the right. However, the distanceLeftRightCheck is not active, 
+            because the arduino can't handle 3 distance sensors simultaneously
     Pixy2cam function:
         void objectDetection(): 
-            Iterates through the detected objects by the camera. To make sure a right object
-            is detected it only takes a object which age is at least 30, y pixels are above
-            50 and below 250 and width/height is higher than 10 and lower than 50
-            After taken the right object, it rotates towards the middle depending on the x value
-            of the object. If it's roughly in the middle, it drives forward until it's right in front
-            of it.
+            Iterates through the detected objects found with a camera. To make sure the right object
+            is detected, it only takes an object which age is at least 30 (Around half a second in frame), 
+            with y pixels that are above 50 and below 250 and when the width/height is higher than 10 and 
+            lower than 50. After taken the right object, it rotates towards the middle depending on the x value
+            of the object. If it's roughly in the middle, the LED flickers thrice to tell it found an object. 
+            After that it rotates 90 degrees (600 milliseconds) and returns.  
         
 
 

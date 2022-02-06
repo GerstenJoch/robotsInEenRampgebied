@@ -1,12 +1,16 @@
 //*************************************************************************//
+//                                                                         //    
 //                                                                         //
 //                        ROBOTS IN EEN RAMPGEBIED                         //
 //                                                                         //
+//                                                                         //
 //                              Code Written By:                           //
+//                                                                         //
 //                                                                         //
 //                            - Alexander Mosselaar                        //
 //                            - Guido Ruijs                                //
 //                            - Sander Reinders                            //
+//                                                                         //
 //                                                                         //
 //*************************************************************************//
 #include <Pixy2.h>
@@ -17,7 +21,6 @@ const int RB_Motor = 3;
 const int RF_Motor = 4;
 const int LB_Motor = 9; 
 const int LF_Motor = 5; 
-int speed1;
 //ultrasonic sensor
 #define trigPinF 11    // Trigger
 #define echoPinF 10    // Echo
@@ -33,12 +36,10 @@ int pixy_x, pixy_y,pixy_age,pixy_width,pixy_height, pixy_old_x;
 int pixy_x_j, pixy_y_j,pixy_age_j,pixy_width_j,pixy_height_j;
 int j;
 int x = 0;
-//Button & Buzzer
-const int startButton = 2;
-int startButtonState;
+//Button & LED
+const int button = 2;
+int buttonState;
 const int ledPin = 6;
-const int stopButtonPin = 7;
-int stopButtonState;
 
 void setup() {                        //Let's all the components initiate
   pinMode(trigPinL, OUTPUT);
@@ -48,7 +49,7 @@ void setup() {                        //Let's all the components initiate
   pinMode(RB_Motor, OUTPUT);
   //pinMode(trigPinF, OUTPUT);
   //pinMode(echoPinF, INPUT);
-  pinMode(startButton, INPUT);
+  pinMode(button, INPUT);
   pinMode(ledPin, OUTPUT);
   pinMode(stopButtonPin, INPUT);                  //Initiates camera
   digitalWrite(ledPin, LOW);  
@@ -63,9 +64,8 @@ void loop() {                     //Loops through all the code
 }
 
 void justWork(){    //Runs all the necessary code to work. Can be in the loop function, but is created as a joke
-  startButtonState = digitalRead(startButton);                         //Checks the state of the start and stop buttons
-  stopButtonState = digitalRead(stopButtonPin);
-  if (startButtonState == HIGH) {                                      //Robot starts when startbutton is pressed
+  buttonState = digitalRead(button);                         //Checks the state of the start/stop button
+  if (buttonState == HIGH) {                                      //Robot starts when startbutton is pressed
     Serial.print("Protocol initiated \n");
     delay(200);
     while (true){                                                     //Loops through all the code for the robot to drive and function
@@ -74,14 +74,14 @@ void justWork(){    //Runs all the necessary code to work. Can be in the loop fu
     //distanceCheck();
     objectDetection();
     x = 0;
-    startButtonState = digitalRead(startButton); 
-    if (startButtonState == HIGH){                                  //Robot stops when button is pressed again
+    buttonState = digitalRead(button); 
+    if (buttonState == HIGH){                                  //Robot stops when button is pressed again
       Serial.println("Return false");
       delay(200);
       break;
     }
   }
-  startButtonState = digitalRead(startButton);
+  buttonState = digitalRead(button);
   stopAll();
     digitalWrite(ledPin, LOW);
   Serial.println("Robot stopped");
@@ -135,11 +135,11 @@ void fwd(int speed){      //Goes forward infinitely given a speed
   Serial.println("Driving FORWARD ");
 }
 
-void bwd(int speed1){    //Goes backwards infinitely given a speed
+void bwd(int speed){    //Goes backwards infinitely given a speed
   analogWrite(LF_Motor, 0);
   analogWrite(RF_Motor, 0);
-  analogWrite(LB_Motor, speed1);
-  analogWrite(RB_Motor, speed1);
+  analogWrite(LB_Motor, speed);
+  analogWrite(RB_Motor, speed);
   Serial.println("Driving BACKWARDS \n");
 }
 
